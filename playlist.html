@@ -243,12 +243,16 @@
   </style>
   <link rel="stylesheet" href="polish.css">
 </head>
-<body>
+<body class="playlist-page">
   <div class="navbar">
     <a href="index.html" class="back-button">Back to Home</a>
   </div>
 
-  <h1>Our Playlist 🎶</h1>
+  <header class="playlist-hero">
+    <span class="memory-stamp">Memory Soundtrack</span>
+    <h1>Our Playlist</h1>
+    <p>Songs connected to moments, feelings, and pieces of the story.</p>
+  </header>
 
   <img src="https://pngimg.com/uploads/hello_kitty/hello_kitty_PNG47.png" alt="Hello Kitty" class="hello-kitty" />
 
@@ -264,7 +268,7 @@
         <audio id="audio1" src="YourUniverse.mp3"></audio>
         <div class="audio-controls">
           <button onclick="playAudio('audio1')">Play</button>
-          <input type="range" id="seek1" value="0" min="0" max="100" step="1" onchange="seekAudio('audio1', this.value)">
+          <input type="range" id="seek1" value="0" min="0" max="100" step="1" onchange="seekAudio('audio1', this.value)" aria-label="Your Universe progress">
         </div>
       </div>
     </div>
@@ -286,7 +290,7 @@
         <audio id="audio2" src="MakeItWithYou.mp3"></audio>
         <div class="audio-controls">
           <button onclick="playAudio('audio2')">Play</button>
-          <input type="range" id="seek2" value="0" min="0" max="100" step="1" onchange="seekAudio('audio2', this.value)">
+          <input type="range" id="seek2" value="0" min="0" max="100" step="1" onchange="seekAudio('audio2', this.value)" aria-label="Make It With You progress">
         </div>
       </div>
     </div>
@@ -308,7 +312,7 @@
         <audio id="audio3" src="111.mp3"></audio>
         <div class="audio-controls">
           <button onclick="playAudio('audio3')">Play</button>
-          <input type="range" id="seek3" value="0" min="0" max="100" step="1" onchange="seekAudio('audio3', this.value)">
+          <input type="range" id="seek3" value="0" min="0" max="100" step="1" onchange="seekAudio('audio3', this.value)" aria-label="Kahit Maputi Na Ang Buhok Ko progress">
         </div>
       </div>
     </div>
@@ -332,7 +336,7 @@ And if I’m lucky, I’ll grow old with you, ikaw at ikaw pa rin ang pipiliin k
         <audio id="audio4" src="Pahintulot.mp3"></audio>
         <div class="audio-controls">
           <button onclick="playAudio('audio4')">Play</button>
-          <input type="range" id="seek4" value="0" min="0" max="100" step="1" onchange="seekAudio('audio4', this.value)">
+          <input type="range" id="seek4" value="0" min="0" max="100" step="1" onchange="seekAudio('audio4', this.value)" aria-label="Pahintulot progress">
         </div>
       </div>
     </div>
@@ -355,7 +359,26 @@ And if I’m lucky, I’ll grow old with you, ikaw at ikaw pa rin ang pipiliin k
   <script>
     function playAudio(audioId) {
       const audio = document.getElementById(audioId);
-      audio.play();
+      const clickedButton = audio.closest('.audio-player').querySelector('button');
+
+      document.querySelectorAll('audio').forEach((otherAudio) => {
+        if (otherAudio !== audio) {
+          otherAudio.pause();
+          const otherButton = otherAudio.closest('.audio-player')?.querySelector('button');
+          if (otherButton) {
+            otherButton.textContent = 'Play';
+          }
+        }
+      });
+
+      if (audio.paused) {
+        audio.play();
+        clickedButton.textContent = 'Pause';
+      } else {
+        audio.pause();
+        clickedButton.textContent = 'Play';
+      }
+
       audio.addEventListener('timeupdate', function() {
         const seekBar = document.getElementById('seek' + audioId.charAt(audioId.length - 1));
         seekBar.value = (audio.currentTime / audio.duration) * 100;
