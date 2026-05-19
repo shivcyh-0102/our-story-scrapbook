@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Our Playlist</title>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;500&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth; /* Enable smooth scrolling */
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #fce4ec, #f8bbd0, #fce4ec);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 0;
+      padding: 2rem;
+      color: #cc3366;
+      text-align: center;
+    }
+
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background-color: rgba(255, 255, 255, 0.9);
+      padding: 1rem;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      z-index: 1000;
+      text-align: center;
+    }
+
+    .navbar a {
+      margin: 0 1rem;
+      color: #cc3366;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    .navbar a:hover {
+      color: #ff4081;
+    }
+
+    h1 {
+      font-family: 'Pacifico', cursive;
+      font-size: 3rem;
+      margin-bottom: 1.5rem;
+      color: #ff4081;
+      text-shadow: 1px 1px 3px #ffc1d9;
+      margin-top: 80px; /* Prevent content from being hidden behind the navbar */
+    }
+
+    .hello-kitty {
+      width: 100px; /* Adjust size as needed */
+      position: absolute;
+      top: 20px; /* Position it at the top */
+      right: 20px; /* Position it to the right */
+      z-index: 10; /* Ensure it appears above other elements */
+    }
+
+    .song {
+      background: rgba(255, 240, 245, 0.8);
+      padding: 1rem;
+      border-radius: 10px;
+      margin: 1rem 0;
+      box-shadow: 0 4px 12px rgba(204, 51, 102, 0.2);
+      width: 90%;
+      max-width: 400px;
+      position: relative; /* For positioning music notes */
+    }
+
+    .music-player {
+      text-align: center;
+      margin-bottom: 2.5rem;
+      background: linear-gradient(135deg, #ffcccb, #ffb3c1);
+      border-radius: 10px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      border: 4px solid #ffb3c1;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .album-wrapper {
+      position: relative;
+      display: inline-block;
+    }
+
+    .album-art {
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      object-fit: cover;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      border: 6px solid #ffc0cb;
+      animation: spin 10s linear infinite; /* Spinning animation */
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .music-notes {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      font-size: 1.5rem;
+      animation: floatNotes 3s infinite ease-in-out;
+    }
+
+    @keyframes floatNotes {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0); }
+    }
+
+    .audio-player {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 0.5rem;
+      background: #fff;
+      border-radius: 5px;
+      padding: 10px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .audio-player button {
+      background: #cc3366;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      padding: 5px 10px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .audio-player button:hover {
+      background: #ff4081;
+    }
+
+    audio {
+      width: 100%;
+      display: none; /* Hide default audio controls */
+    }
+
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      width: 100%;
+    }
+
+    .audio-controls input[type="range"] {
+      -webkit-appearance: none;
+      width: 100%;
+      height: 5px;
+      background: #ccc;
+      border-radius: 5px;
+      outline: none;
+      margin: 0 10px;
+    }
+
+    .audio-controls input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 15px;
+      height: 15px;
+      background: #cc3366;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    .audio-controls input[type="range"]::-moz-range-thumb {
+      width: 15px;
+      height: 15px;
+      background: #cc3366;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    .back-button {
+      margin-top: 2rem;
+      display: inline-block;
+      font-size: 1rem;
+      color: #cc3366;
+      text-decoration: none;
+      border: 2px solid #cc3366;
+      padding: 0.6rem 1.2rem;
+      border-radius: 30px;
+      transition: 0.3s;
+      font-weight: 500;
+    }
+
+    .back-button:hover {
+      background: #cc3366;
+      color: white;
+    }
+
+    .description {
+      display: none; /* Initially hidden */
+      margin-top: 1rem;
+      background: rgba(255, 240, 245, 0.8);
+      padding: 1rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(204, 51, 102, 0.2);
+      transition: max-height 0.3s ease, opacity 0.3s ease;
+      overflow-y: auto; /* Enable vertical scrolling */
+      opacity: 0;
+      max-height: 150px; /* Set a max height for the transition */
+    }
+
+    .show {
+      display: block; /* Show description when toggled */
+      opacity: 1;
+      max-height: 200px; /* Set a max height for the transition */
+    }
+
+    .description-button {
+      background: linear-gradient(135deg, #ffb3c1, #cc3366);
+      color: white;
+      border: none;
+      border-radius: 30px;
+      padding: 0.6rem 1.2rem;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.3s;
+      margin-top: 1rem;
+    }
+
+    .description-button:hover {
+      background: #ff4081;
+      transform: scale(1.05);
+    }
+  </style>
+  <link rel="stylesheet" href="polish.css">
+</head>
+<body>
+  <div class="navbar">
+    <a href="index.html" class="back-button">Back to Home</a>
+  </div>
+
+  <h1>Our Playlist 🎶</h1>
+
+  <img src="https://pngimg.com/uploads/hello_kitty/hello_kitty_PNG47.png" alt="Hello Kitty" class="hello-kitty" />
+
+  <div class="song">
+    <h2>Your Universe</h2>
+    <p>Rico Blanco</p>
+    <div class="music-player">
+      <div class="album-wrapper">
+        <div class="music-notes">🎵</div>
+        <img src="rico.jpg" alt="Album Cover 1" class="album-art" />
+      </div>
+      <div class="audio-player">
+        <audio id="audio1" src="YourUniverse.mp3"></audio>
+        <div class="audio-controls">
+          <button onclick="playAudio('audio1')">Play</button>
+          <input type="range" id="seek1" value="0" min="0" max="100" step="1" onchange="seekAudio('audio1', this.value)">
+        </div>
+      </div>
+    </div>
+    <button class="description-button" onclick="toggleDescription('desc1')">Show Description</button>
+    <div id="desc1" class="description">
+    i dedicated this song to you kasi it reminds me of how much you mean to me, and how your presence is so important to me. Even if you think na you're lucky to have me, the truth is, I'm the lucky one.
+    </div>
+  </div>
+
+  <div class="song">
+    <h2>Make It With You</h2>
+    <p>Ben&Ben</p>
+    <div class="music-player">
+      <div class="album-wrapper">
+        <div class="music-notes">🎶</div>
+        <img src="MakeItWithYou.jpg" alt="Album Cover 2" class="album-art" />
+      </div>
+      <div class="audio-player">
+        <audio id="audio2" src="MakeItWithYou.mp3"></audio>
+        <div class="audio-controls">
+          <button onclick="playAudio('audio2')">Play</button>
+          <input type="range" id="seek2" value="0" min="0" max="100" step="1" onchange="seekAudio('audio2', this.value)">
+        </div>
+      </div>
+    </div>
+    <button class="description-button" onclick="toggleDescription('desc2')">Show Description</button>
+    <div id="desc2" class="description">
+     I’m dedicating this song to you kasi I see something beautiful in what we have right now and i know that it's something real, something worth trying for. this song reminds me of how I feel about taking chances not just in life, but in love. Especially with you. And in the end, I really want to make it with you, my lovelove.
+    </div>
+  </div>
+
+  <div class="song">
+    <h2>Kahit Maputi Na Ang Buhok Ko</h2>
+    <p>Rey Valera</p>
+    <div class="music-player">
+      <div class="album-wrapper">
+        <div class="music-notes">🎼</div>
+        <img src="111.jpg" alt="Album Cover 3" class="album-art" />
+      </div>
+      <div class="audio-player">
+        <audio id="audio3" src="111.mp3"></audio>
+        <div class="audio-controls">
+          <button onclick="playAudio('audio3')">Play</button>
+          <input type="range" id="seek3" value="0" min="0" max="100" step="1" onchange="seekAudio('audio3', this.value)">
+        </div>
+      </div>
+    </div>
+    <button class="description-button" onclick="toggleDescription('desc3')">Show Description</button>
+    <div id="desc3" class="description">
+     
+I dedicate this song to you because my love isn’t just for now, hindi lang to pang mabilisan, it’s for every version of you, even the one with gray or white hair, tired eyes, and quiet days. my love for you isn't just about kissing and sweet messages, it's about choosing you again and again, even as time changes everything else.
+And if I’m lucky, I’ll grow old with you, ikaw at ikaw pa rin ang pipiliin ko, kahit maputi na ang buhok ko.
+    </div>
+  </div>
+
+  <div class="song">
+    <h2>Pahintulot</h2>
+    <p>Shirebound</p>
+    <div class="music-player">
+      <div class="album-wrapper">
+        <div class="music-notes">🎤</div>
+        <img src="kami.jpg" alt="Album Cover 4" class="album-art" />
+      </div>
+      <div class="audio-player">
+        <audio id="audio4" src="Pahintulot.mp3"></audio>
+        <div class="audio-controls">
+          <button onclick="playAudio('audio4')">Play</button>
+          <input type="range" id="seek4" value="0" min="0" max="100" step="1" onchange="seekAudio('audio4', this.value)">
+        </div>
+      </div>
+    </div>
+    <button class="description-button" onclick="toggleDescription('desc4')">Show Description</button>
+    <div id="desc4" class="description">
+      I dedicated this song for you nung nanliligaw pa lang ako<br>
+      and yes, alam kong hindi mo to alam kasi di ko naman sinabi sa 'yo hehe,<br>
+      I dedicated this song to you kasi alam ko sa sarili ko na I'm not just courting you<br>
+      para wala lang or para mang trip lang, I was there with all honesty,<br>
+      patient and pure love.<br><br>
+      Hindi ako sigurado kung papayag ka, kung may pag-asa ba talaga ako,<br>
+      pero ang alam ko lang: kung pagbibigyan mo ako, I’d take care of you<br>
+      and your heart the best way I can.<br><br>
+
+      Hindi ko minadali, kasi para sa akin, ang totoong pagmamahal hindi lang basta sinasabi,<br>
+      hinihingi ‘yon ng pahintulot.
+    </div>
+  </div>
+
+  <script>
+    function playAudio(audioId) {
+      const audio = document.getElementById(audioId);
+      audio.play();
+      audio.addEventListener('timeupdate', function() {
+        const seekBar = document.getElementById('seek' + audioId.charAt(audioId.length - 1));
+        seekBar.value = (audio.currentTime / audio.duration) * 100;
+      });
+    }
+
+    function seekAudio(audioId, value) {
+      const audio = document.getElementById(audioId);
+      audio.currentTime = (value / 100) * audio.duration;
+    }
+
+    function toggleDescription(descId) {
+      const description = document.getElementById(descId);
+      description.classList.toggle('show');
+    }
+  </script>
+  <script src="polish.js"></script>
+</body>
+</html>

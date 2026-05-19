@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Our Photo Gallery</title>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;500&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to right, #fff0f5, #f0e5ff);
+      padding: 2rem;
+      max-width: 1000px;
+      margin: auto;
+      color: #333;
+    }
+
+    /* Fixed Navigation Bar */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background-color: rgba(255, 255, 255, 0.9);
+      padding: 1rem;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      z-index: 1000;
+      text-align: center;
+    }
+
+    .navbar a {
+      margin: 0 1rem;
+      color: #cc3366;
+      font-weight: bold;
+      text-decoration: none;
+      padding: 0.6rem 1.2rem;
+      border-radius: 30px;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    .navbar a:hover {
+      background: #cc3366;
+      color: white;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 2rem;
+      margin-top: 80px; /* Prevent content from being hidden behind the navbar */
+    }
+
+    h1 {
+      font-family: 'Pacifico', cursive;
+      font-size: 2.5rem;
+      color: #cc3366;
+      margin-bottom: 0.5rem;
+    }
+
+    p {
+      font-size: 1rem;
+      color: #666;
+      line-height: 1.5;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 2rem;
+      padding-top: 1rem;
+    }
+
+    .photo-card {
+      background: white;
+      border-radius: 15px;
+      border: 4px dashed #ffc0cb;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+      overflow: hidden;
+      text-align: center;
+      padding: 1rem;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer; /* Indicate that the card is clickable */
+    }
+
+    .photo-card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+    }
+
+    .photo-card img {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+      margin-bottom: 0.8rem;
+      transition: transform 0.3s ease;
+    }
+
+    .photo-card img:hover {
+      transform: scale(1.1); /* Zoom effect on image hover */
+    }
+
+    .caption {
+      font-size: 0.9rem;
+      color: #cc3366;
+      font-weight: 500;
+      margin-top: 0.5rem;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 3rem;
+      color: #aaa;
+      font-size: 0.9rem;
+    }
+
+    /* Modal Styles */
+    .modal {
+      display: none; /* Hidden by default */
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.8);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      margin: auto;
+      display: block;
+      max-width: 80%;
+      border-radius: 10px;
+    }
+
+    .close {
+      position: absolute;
+      top: 20px;
+      right: 35px;
+      color: #fff;
+      font-size: 40px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+  </style>
+  <link rel="stylesheet" href="polish.css">
+</head>
+<body>
+
+  <div class="navbar" id="navbar">
+    <a href="index.html">Back to Home</a>
+  </div>
+
+  <header>
+    <h1>📸 Our Memories</h1>
+    <p>A collection of my favorite captured moments of us</p>
+  </header>
+
+  <div class="gallery">
+    <div class="photo-card" onclick="openModal('una.jpg')">
+      <img src="una.jpg" alt="First Date">
+      <div class="caption">Our 1st photo booth together, 1st anniversary din natin that time</div>
+    </div>
+    <div class="photo-card" onclick="openModal('dos.jpg')">
+      <img src="dos.jpg" alt="Goofy Selfie">
+      <div class="caption">Picture natin nung sinundo kita sa school hehe</div>
+    </div>
+    <div class="photo-card" onclick="openModal('tres.jpg')">
+      <img src="tres.jpg" alt="School Event">
+      <div class="caption">1st anniversary din natin to, fav ko to kasi ang cute natin tsaka binigyan mo rin ako ng ring</div>
+    </div>
+    <div class="photo-card" onclick="openModal('kwatro.jpg')">
+      <img src="kwatro.jpg" alt="Walk Home">
+      <div class="caption">this picture is way back nung grade 10 tayo, miss ko na rin</div>
+    </div>
+    <div class="photo-card" onclick="openModal('marikina.jpg')">
+      <img src="marikina.jpg" alt="Beach Day">
+      <div class="caption">picture natin together sa marikina river banks, pinuntahan kita sa marikina that time</div>
+    </div>
+    <div class="photo-card" onclick="openModal('cute.jpg')">
+      <img src="cute.jpg" alt="Anniversary Celebration">
+      <div class="caption">ito yung una kong punta sa marikina, first bonding din natin together hehehe </div>
+    </div>
+    <div class="photo-card" onclick="openModal('cute2.jpg')">
+      <img src="cute2.jpg" alt="Hiking Adventure">
+      <div class="caption">random moment! i love this picture kasi you're so cute, naka sandal pa yung ulo mo sa kamay ko baby</div>
+    </div>
+    <div class="photo-card" onclick="openModal('cute3.jpg')">
+      <img src="cute3.jpg" alt="Movie Night">
+      <div class="caption">we're so cute together! we did the trend</div>
+    </div>
+  </div>
+
+  <footer>
+     Made By JM 💖
+  </footer>
+
+
+  <div id="myModal" class="modal">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <img class="modal-content" id="img01" alt="Modal Image">
+  </div>
+
+  <script>
+    function openModal(imageSrc) {
+      const modal = document.getElementById("myModal");
+      const navbar = document.getElementById("navbar");
+      const modalImg = document.getElementById("img01");
+      modal.style.display = "flex";
+      navbar.style.display = "none"; 
+      modalImg.src = imageSrc;
+    }
+
+    function closeModal() {
+      const modal = document.getElementById("myModal");
+      const navbar = document.getElementById("navbar");
+      modal.style.display = "none";
+      navbar.style.display = ""; 
+    }
+  </script>
+  <script src="polish.js"></script>
+
+</body>
+</html>

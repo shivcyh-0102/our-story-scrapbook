@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Our Time Together</title>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;500&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #ffe0ec, #ffe6f0, #fef6ff);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      padding: 1rem;
+      color: #cc3366;
+      text-align: center;
+      animation: fadeIn 2s ease;
+      padding-top: 80px; /* Prevent content from being hidden behind the navbar */
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    h1 {
+      font-family: 'Pacifico', cursive;
+      font-size: 3rem;
+      margin-bottom: 1.5rem;
+      color: #ff4081;
+      text-shadow: 1px 1px 3px #ffc1d9;
+    }
+
+    #counter, #countdown {
+      font-size: 1.2rem;
+      background: rgba(255, 240, 245, 0.9);
+      padding: 1.2rem 2rem;
+      border-radius: 20px;
+      box-shadow: 0 8px 24px rgba(204, 51, 102, 0.2);
+      max-width: 90%;
+      line-height: 1.6;
+      transition: all 0.3s ease;
+      margin: 1rem 0; /* Add margin for spacing */
+    }
+
+    #counter:hover, #countdown:hover {
+      transform: scale(1.03);
+      box-shadow: 0 10px 30px rgba(204, 51, 102, 0.3);
+    }
+
+    a {
+      margin-top: 2rem;
+      display: inline-block;
+      font-size: 1rem;
+      color: #cc3366;
+      text-decoration: none;
+      border: 2px solid #cc3366;
+      padding: 0.6rem 1.2rem;
+      border-radius: 30px;
+      transition: 0.3s;
+      font-weight: 500;
+    }
+
+    a:hover {
+      background: #cc3366;
+      color: white;
+    }
+
+    /* Fixed Navigation Bar */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background-color: rgba(255, 255, 255, 0.9);
+      padding: 1rem;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      z-index: 1000;
+      text-align: center;
+    }
+
+    .navbar a {
+      margin: 0 1rem;
+      color: #cc3366;
+      font-weight: bold;
+    }
+
+    .navbar a:hover {
+      color: #ff4081;
+    }
+  </style>
+  <link rel="stylesheet" href="polish.css">
+</head>
+<body>
+  <div class="navbar">
+    <a href="index.html">Back to Home</a>
+  </div>
+
+  <h1>Our Time Together</h1>
+  <p class="ending-note">The timer is now paused at the day the relationship ended, April 14, 2026.</p>
+  <div id="counter">Loading the memory...</div>
+  <div id="countdown">December 20, 2023 - April 14, 2026</div>
+
+  <script>
+    const counter = document.getElementById('counter');
+    const countdown = document.getElementById('countdown');
+    const startDate = new Date('2023-12-20T00:00:00');
+    const endDate = new Date('2026-04-14T00:00:00');
+
+    function updateCounter() {
+      const diff = endDate - startDate;
+      const daysTotal = Math.floor(diff / (1000 * 60 * 60 * 24));
+
+      counter.innerHTML = `
+        We were together for<br>
+        <strong>2</strong> years, 
+        <strong>3</strong> months, 
+        and <strong>25</strong> days.<br>
+        <span>That is <strong>${daysTotal}</strong> days of shared memories.</span>
+      `;
+    }
+
+    function updateCountdown() {
+      countdown.innerHTML = `
+        Started on <strong>December 20, 2023</strong><br>
+        Ended on <strong>April 14, 2026</strong>
+      `;
+    }
+
+    updateCounter();
+    updateCountdown();
+  </script>
+  <script src="polish.js"></script>
+</body>
+</html>
