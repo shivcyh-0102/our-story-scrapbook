@@ -138,27 +138,6 @@
       font-weight: bold;
     }
 
-    .back-to-top {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background-color: #cc3366;
-      color: white;
-      border: none;
-      border-radius: 50%;
-      width: 50px;
-      height: 50px;
-      font-size: 1.5rem;
-      cursor: pointer;
-      display: none;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-      transition: background-color 0.3s;
-    }
-
-    .back-to-top:hover {
-      background-color: #ff69b4;
-    }
-
     .music-player {
       text-align: center;
       margin-bottom: 2.5rem;
@@ -316,8 +295,6 @@
     <a href="allaboutyou.html" class="button">💖 All About You</a>
   </section>
 
-  <button class="back-to-top" onclick="scrollToTop()">↑</button>
-
   <script>
     function calculateDuration() {
       const startDate = new Date('2023-12-20'); 
@@ -333,18 +310,6 @@
 
     calculateDuration();
 
-    window.onscroll = function() {
-      const button = document.querySelector('.back-to-top');
-      if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
-        button.style.display = "block";
-      } else {
-        button.style.display = "none";
-      }
-    };
-
-    function scrollToTop() {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
   </script>
   <script src="polish.js"></script>
 

@@ -97,76 +97,47 @@
       font-size: 0.9rem;
     }
 
-    .back-to-top {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background-color: #cc3366;
-      color: white;
-      border: none;
-      border-radius: 50%;
-      width: 50px;
-      height: 50px;
-      font-size: 1.5rem;
-      cursor: pointer;
-      display: none;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-      transition: background-color 0.3s;
-    }
-
-    .back-to-top:hover {
-      background-color: #ff69b4;
-    }
   </style>
   <link rel="stylesheet" href="polish.css">
 </head>
-<body>
+<body class="dedication-page">
   <div class="navbar">
     <a href="index.html">🏠 Back to Home</a>
   </div>
 
-  <h1>All About You</h1>
+  <header class="dedication-hero">
+    <span class="memory-stamp">Personal Dedication</span>
+    <h1>All About You</h1>
+    <p>A page for the person who became part of the story in a way that still matters.</p>
+  </header>
 
-  <div class="photo-scroll-container">
-    <div class="photo-container">
+  <main class="dedication-layout">
+    <figure class="dedication-photo-card">
       <img src="ganda.jpg" alt="My Girlfriend" class="girlfriend-photo" />
-    </div>
-  </div>
+      <figcaption>Marla</figcaption>
+    </figure>
 
-  <div class="message">
-    <p>
-    
-   She’s Marla, my girlfriend. She’s so beautiful, so cute, and for me, she’s already perfect.
+    <section class="dedication-message">
+      <span class="section-label">Saved Words</span>
+      <h2>For Marla</h2>
+      <p>
+        She’s Marla. She’s beautiful, cute, and for me, someone who will always be remembered with softness.
+      </p>
+      <p>
+        We had different interests, different ways of thinking, and there were times when we did not understand each other easily. But even through those hard moments, what we had still became a meaningful part of my life.
+      </p>
+      <p>
+        I’m proud of her because she’s strong. She has been through a lot, yet she keeps going. She carried pain, pressure, and problems that not everyone could see, but she still stood through them.
+      </p>
+      <p>
+        I know I was not perfect either. I had flaws, made mistakes, and had moments I wish I handled better. Still, this page keeps the honest part of the story: the care, the effort, and the memories that mattered.
+      </p>
+      <p>
+        She became my best friend, my safe space, my peace, and my person for an important season of my life. No matter where life goes from here, I’ll always be thankful for the chapter we shared.
+      </p>
+    </section>
+  </main>
 
-Yes, we sometimes argue or don’t get along because we have different interests, different ways of thinking. But despite that, I still love her so much. Even when we fight or when things get hard, at the end of the day, it’s still her I want to be with.
-
-I’m really proud of her because she’s so strong. She’s been through a lot with her family, with the way some people treat her but she keeps going, like nothing can break her. I just want to say how proud I am of you, baby. You’ve overcome so much pain and so many problems, but you’re still standing. You’re one of the strongest people I know.
-
-I know I’m not perfect either. I have flaws, I make mistakes, and sometimes I hurt you even if I don’t mean to. But I’m really trying to be better. Because you’re worth it all the effort, all the time, all the love. You’re worth every second.
-
-Even when we have misunderstandings or small fights because of our differences, I know that’s just part of any real relationship. What’s important is that I never stop loving you. I love you in all ways in your best and in your worst, during happy days and even when things get hard.
-
-You’re not just my girlfriend you’re my best friend, my safe space, my peace, my person. Every day with you feels right. You make me feel seen, heard, and loved. I’m so thankful that I have you.
-
-And no matter what happens, no matter how hard things get, I’ll always choose you. Over and over again. </p>
-  </div>
-
-  <button class="back-to-top" onclick="scrollToTop()">↑</button>
-
-  <script>
-    window.onscroll = function() {
-      const button = document.querySelector('.back-to-top');
-      if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
-        button.style.display = "block";
-      } else {
-        button.style.display = "none";
-      }
-    };
-
-    function scrollToTop() {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-  </script>
   <script src="polish.js"></script>
 </body>
 </html>
