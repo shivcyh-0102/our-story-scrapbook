@@ -305,7 +305,7 @@
       <li><strong>January 10, 2024:</strong> Our first kiss! 💋 </li>
       <li><strong>April 14, 2026:</strong> The day our relationship ended, but the memories stayed.</li>
     </ul>
-    <div id="counter"></div>
+    <div id="counter" class="memory-counter"></div>
   </section>
 
   <section id="navigate">
@@ -324,7 +324,11 @@
       const endDate = new Date('2026-04-14'); 
       const timeDiff = endDate - startDate;
       const daysDiff = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
-      document.getElementById('counter').innerText = `We were together for ${daysDiff} days, from December 20, 2023 to April 14, 2026.`;
+      document.getElementById('counter').innerHTML = `
+        <span class="counter-label">Time Together</span>
+        <strong>${daysDiff} days</strong>
+        <span class="counter-dates">December 20, 2023 - April 14, 2026</span>
+      `;
     }
 
     calculateDuration();
