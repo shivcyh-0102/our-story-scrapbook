@@ -15,7 +15,6 @@
       color: #333;
     }
 
-    /* Fixed Navigation Bar */
     .navbar {
       position: fixed;
       top: 0;
@@ -46,7 +45,7 @@
     header {
       text-align: center;
       margin-bottom: 2rem;
-      margin-top: 80px; /* Prevent content from being hidden behind the navbar */
+      margin-top: 80px;
     }
 
     h1 {
@@ -78,7 +77,7 @@
       text-align: center;
       padding: 1rem;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
-      cursor: pointer; /* Indicate that the card is clickable */
+      cursor: pointer;
     }
 
     .photo-card:hover {
@@ -95,7 +94,7 @@
     }
 
     .photo-card img:hover {
-      transform: scale(1.1); /* Zoom effect on image hover */
+      transform: scale(1.1);
     }
 
     .caption {
@@ -112,9 +111,8 @@
       font-size: 0.9rem;
     }
 
-    /* Modal Styles */
     .modal {
-      display: none; /* Hidden by default */
+      display: none;
       position: fixed;
       z-index: 1;
       left: 0;
@@ -146,48 +144,57 @@
   </style>
   <link rel="stylesheet" href="polish.css">
 </head>
-<body>
+<body class="gallery-page">
 
   <div class="navbar" id="navbar">
     <a href="index.html">Back to Home</a>
   </div>
 
-  <header>
-    <h1>📸 Our Memories</h1>
-    <p>A collection of my favorite captured moments of us</p>
+  <header class="gallery-hero">
+    <span class="memory-stamp">Photo Archive</span>
+    <h1>Our Memories</h1>
+    <p>A softer gallery for the moments that stayed captured.</p>
   </header>
 
   <div class="gallery">
-    <div class="photo-card" onclick="openModal('una.jpg')">
+    <div class="photo-card" onclick="openModal(0)">
       <img src="una.jpg" alt="First Date">
+      <span class="photo-tag">Anniversary</span>
       <div class="caption">Our 1st photo booth together, 1st anniversary din natin that time</div>
     </div>
-    <div class="photo-card" onclick="openModal('dos.jpg')">
+    <div class="photo-card" onclick="openModal(1)">
       <img src="dos.jpg" alt="Goofy Selfie">
+      <span class="photo-tag">School Day</span>
       <div class="caption">Picture natin nung sinundo kita sa school hehe</div>
     </div>
-    <div class="photo-card" onclick="openModal('tres.jpg')">
+    <div class="photo-card" onclick="openModal(2)">
       <img src="tres.jpg" alt="School Event">
+      <span class="photo-tag">Favorite</span>
       <div class="caption">1st anniversary din natin to, fav ko to kasi ang cute natin tsaka binigyan mo rin ako ng ring</div>
     </div>
-    <div class="photo-card" onclick="openModal('kwatro.jpg')">
+    <div class="photo-card" onclick="openModal(3)">
       <img src="kwatro.jpg" alt="Walk Home">
+      <span class="photo-tag">Grade 10</span>
       <div class="caption">this picture is way back nung grade 10 tayo, miss ko na rin</div>
     </div>
-    <div class="photo-card" onclick="openModal('marikina.jpg')">
+    <div class="photo-card" onclick="openModal(4)">
       <img src="marikina.jpg" alt="Beach Day">
+      <span class="photo-tag">Marikina</span>
       <div class="caption">picture natin together sa marikina river banks, pinuntahan kita sa marikina that time</div>
     </div>
-    <div class="photo-card" onclick="openModal('cute.jpg')">
+    <div class="photo-card" onclick="openModal(5)">
       <img src="cute.jpg" alt="Anniversary Celebration">
+      <span class="photo-tag">First Visit</span>
       <div class="caption">ito yung una kong punta sa marikina, first bonding din natin together hehehe </div>
     </div>
-    <div class="photo-card" onclick="openModal('cute2.jpg')">
+    <div class="photo-card" onclick="openModal(6)">
       <img src="cute2.jpg" alt="Hiking Adventure">
+      <span class="photo-tag">Random</span>
       <div class="caption">random moment! i love this picture kasi you're so cute, naka sandal pa yung ulo mo sa kamay ko baby</div>
     </div>
-    <div class="photo-card" onclick="openModal('cute3.jpg')">
+    <div class="photo-card" onclick="openModal(7)">
       <img src="cute3.jpg" alt="Movie Night">
+      <span class="photo-tag">Trend</span>
       <div class="caption">we're so cute together! we did the trend</div>
     </div>
   </div>
@@ -198,26 +205,108 @@
 
 
   <div id="myModal" class="modal">
-    <span class="close" onclick="closeModal()">&times;</span>
-    <img class="modal-content" id="img01" alt="Modal Image">
+    <button class="close" type="button" onclick="closeModal()" aria-label="Close photo">&times;</button>
+    <button class="modal-nav modal-prev" type="button" onclick="changePhoto(-1)" aria-label="Previous photo">‹</button>
+    <figure class="modal-frame">
+      <img class="modal-content" id="img01" alt="Modal Image">
+      <figcaption id="modalCaption"></figcaption>
+    </figure>
+    <button class="modal-nav modal-next" type="button" onclick="changePhoto(1)" aria-label="Next photo">›</button>
   </div>
 
   <script>
-    function openModal(imageSrc) {
+    const photos = [
+      {
+        src: "una.jpg",
+        alt: "First Date",
+        caption: "Our 1st photo booth together, 1st anniversary din natin that time"
+      },
+      {
+        src: "dos.jpg",
+        alt: "Goofy Selfie",
+        caption: "Picture natin nung sinundo kita sa school hehe"
+      },
+      {
+        src: "tres.jpg",
+        alt: "School Event",
+        caption: "1st anniversary din natin to, fav ko to kasi ang cute natin tsaka binigyan mo rin ako ng ring"
+      },
+      {
+        src: "kwatro.jpg",
+        alt: "Walk Home",
+        caption: "this picture is way back nung grade 10 tayo, miss ko na rin"
+      },
+      {
+        src: "marikina.jpg",
+        alt: "Marikina River Banks",
+        caption: "picture natin together sa marikina river banks, pinuntahan kita sa marikina that time"
+      },
+      {
+        src: "cute.jpg",
+        alt: "First Marikina Visit",
+        caption: "ito yung una kong punta sa marikina, first bonding din natin together hehehe"
+      },
+      {
+        src: "cute2.jpg",
+        alt: "Random Sweet Moment",
+        caption: "random moment! i love this picture kasi you're so cute, naka sandal pa yung ulo mo sa kamay ko baby"
+      },
+      {
+        src: "cute3.jpg",
+        alt: "Trend Photo",
+        caption: "we're so cute together! we did the trend"
+      }
+    ];
+
+    let activePhotoIndex = 0;
+
+    function renderModalPhoto() {
+      const modalImg = document.getElementById("img01");
+      const modalCaption = document.getElementById("modalCaption");
+      const photo = photos[activePhotoIndex];
+      modalImg.src = photo.src;
+      modalImg.alt = photo.alt;
+      modalCaption.textContent = photo.caption;
+    }
+
+    function openModal(index) {
       const modal = document.getElementById("myModal");
       const navbar = document.getElementById("navbar");
-      const modalImg = document.getElementById("img01");
+      activePhotoIndex = index;
+      renderModalPhoto();
       modal.style.display = "flex";
-      navbar.style.display = "none"; 
-      modalImg.src = imageSrc;
+      navbar.style.display = "none";
+      document.body.style.overflow = "hidden";
+    }
+
+    function changePhoto(direction) {
+      activePhotoIndex = (activePhotoIndex + direction + photos.length) % photos.length;
+      renderModalPhoto();
     }
 
     function closeModal() {
       const modal = document.getElementById("myModal");
       const navbar = document.getElementById("navbar");
       modal.style.display = "none";
-      navbar.style.display = ""; 
+      navbar.style.display = "";
+      document.body.style.overflow = "";
     }
+
+    document.addEventListener("keydown", (event) => {
+      const modal = document.getElementById("myModal");
+
+      if (modal.style.display !== "flex") {
+        return;
+      }
+
+      if (event.key === "Escape") {
+        closeModal();
+      } else if (event.key === "ArrowLeft") {
+        changePhoto(-1);
+      } else if (event.key === "ArrowRight") {
+        changePhoto(1);
+      }
+    });
   </script>
   <script src="polish.js"></script>
 
