@@ -254,7 +254,7 @@
     <p>Songs connected to moments, feelings, and pieces of the story.</p>
   </header>
 
-  <img src="https://pngimg.com/uploads/hello_kitty/hello_kitty_PNG47.png" alt="Hello Kitty" class="hello-kitty" />
+  <img src="https://pngimg.com/uploads/hello_kitty/hello_kitty_PNG47.png" alt="Hello Kitty" class="hello-kitty" loading="lazy" decoding="async" />
 
   <div class="song">
     <h2>Your Universe</h2>
@@ -262,10 +262,10 @@
     <div class="music-player">
       <div class="album-wrapper">
         <div class="music-notes">🎵</div>
-        <img src="rico.jpg" alt="Album Cover 1" class="album-art" />
+        <img src="rico.jpg" alt="Album Cover 1" class="album-art" loading="lazy" decoding="async" />
       </div>
       <div class="audio-player">
-        <audio id="audio1" src="YourUniverse.mp3"></audio>
+        <audio id="audio1" src="youruniverse.mp3" preload="metadata"></audio>
         <div class="audio-controls">
           <button onclick="playAudio('audio1')">Play</button>
           <input type="range" id="seek1" value="0" min="0" max="100" step="1" onchange="seekAudio('audio1', this.value)" aria-label="Your Universe progress">
@@ -284,10 +284,10 @@
     <div class="music-player">
       <div class="album-wrapper">
         <div class="music-notes">🎶</div>
-        <img src="MakeItWithYou.jpg" alt="Album Cover 2" class="album-art" />
+        <img src="makeitwithyou.jpg" alt="Album Cover 2" class="album-art" loading="lazy" decoding="async" />
       </div>
       <div class="audio-player">
-        <audio id="audio2" src="MakeItWithYou.mp3"></audio>
+        <audio id="audio2" src="makeitwithyou.mp3" preload="metadata"></audio>
         <div class="audio-controls">
           <button onclick="playAudio('audio2')">Play</button>
           <input type="range" id="seek2" value="0" min="0" max="100" step="1" onchange="seekAudio('audio2', this.value)" aria-label="Make It With You progress">
@@ -306,10 +306,10 @@
     <div class="music-player">
       <div class="album-wrapper">
         <div class="music-notes">🎼</div>
-        <img src="111.jpg" alt="Album Cover 3" class="album-art" />
+        <img src="111.jpg" alt="Album Cover 3" class="album-art" loading="lazy" decoding="async" />
       </div>
       <div class="audio-player">
-        <audio id="audio3" src="111.mp3"></audio>
+        <audio id="audio3" src="111.mp3" preload="metadata"></audio>
         <div class="audio-controls">
           <button onclick="playAudio('audio3')">Play</button>
           <input type="range" id="seek3" value="0" min="0" max="100" step="1" onchange="seekAudio('audio3', this.value)" aria-label="Kahit Maputi Na Ang Buhok Ko progress">
@@ -330,10 +330,10 @@ And if I’m lucky, I’ll grow old with you, ikaw at ikaw pa rin ang pipiliin k
     <div class="music-player">
       <div class="album-wrapper">
         <div class="music-notes">🎤</div>
-        <img src="kami.jpg" alt="Album Cover 4" class="album-art" />
+        <img src="kami.jpg" alt="Album Cover 4" class="album-art" loading="lazy" decoding="async" />
       </div>
       <div class="audio-player">
-        <audio id="audio4" src="Pahintulot.mp3"></audio>
+        <audio id="audio4" src="pahintulot.mp3" preload="metadata"></audio>
         <div class="audio-controls">
           <button onclick="playAudio('audio4')">Play</button>
           <input type="range" id="seek4" value="0" min="0" max="100" step="1" onchange="seekAudio('audio4', this.value)" aria-label="Pahintulot progress">
@@ -356,44 +356,159 @@ And if I’m lucky, I’ll grow old with you, ikaw at ikaw pa rin ang pipiliin k
     </div>
   </div>
 
+  <div class="song">
+    <h2>New Song Slot 1</h2>
+    <p>Artist Name</p>
+    <div class="music-player">
+      <div class="album-wrapper">
+        <div class="music-notes">♪</div>
+        <img src="peakpx.jpg" alt="Album Cover 5" class="album-art" loading="lazy" decoding="async" />
+      </div>
+      <div class="audio-player">
+        <audio id="audio5" src="about you.mp3" preload="metadata"></audio>
+        <div class="audio-controls">
+          <button onclick="playAudio('audio5')">Play</button>
+          <input type="range" id="seek5" value="0" min="0" max="100" step="1" onchange="seekAudio('audio5', this.value)" aria-label="New Song Slot 1 progress">
+        </div>
+      </div>
+    </div>
+    <button class="description-button" onclick="toggleDescription('desc5')">Show Description</button>
+    <div id="desc5" class="description">
+      New song slot. Replace the title, artist, album cover, audio file, and description anytime.
+    </div>
+  </div>
+
+  <div class="song">
+    <h2>New Song Slot 2</h2>
+    <p>Artist Name</p>
+    <div class="music-player">
+      <div class="album-wrapper">
+        <div class="music-notes">♪</div>
+        <img src="rico.jpg" alt="Album Cover 6" class="album-art" loading="lazy" decoding="async" />
+      </div>
+      <div class="audio-player">
+        <audio id="audio6" src="youruniverse.mp3" preload="metadata"></audio>
+        <div class="audio-controls">
+          <button onclick="playAudio('audio6')">Play</button>
+          <input type="range" id="seek6" value="0" min="0" max="100" step="1" onchange="seekAudio('audio6', this.value)" aria-label="New Song Slot 2 progress">
+        </div>
+      </div>
+    </div>
+    <button class="description-button" onclick="toggleDescription('desc6')">Show Description</button>
+    <div id="desc6" class="description">
+      New song slot. Customize this with another song that belongs in the archive.
+    </div>
+  </div>
+
+  <div class="song">
+    <h2>New Song Slot 3</h2>
+    <p>Artist Name</p>
+    <div class="music-player">
+      <div class="album-wrapper">
+        <div class="music-notes">♪</div>
+        <img src="makeitwithyou.jpg" alt="Album Cover 7" class="album-art" loading="lazy" decoding="async" />
+      </div>
+      <div class="audio-player">
+        <audio id="audio7" src="makeitwithyou.mp3" preload="metadata"></audio>
+        <div class="audio-controls">
+          <button onclick="playAudio('audio7')">Play</button>
+          <input type="range" id="seek7" value="0" min="0" max="100" step="1" onchange="seekAudio('audio7', this.value)" aria-label="New Song Slot 3 progress">
+        </div>
+      </div>
+    </div>
+    <button class="description-button" onclick="toggleDescription('desc7')">Show Description</button>
+    <div id="desc7" class="description">
+      New song slot. Swap this placeholder with your own song details later.
+    </div>
+  </div>
+
+  <div class="song">
+    <h2>New Song Slot 4</h2>
+    <p>Artist Name</p>
+    <div class="music-player">
+      <div class="album-wrapper">
+        <div class="music-notes">♪</div>
+        <img src="kami.jpg" alt="Album Cover 8" class="album-art" loading="lazy" decoding="async" />
+      </div>
+      <div class="audio-player">
+        <audio id="audio8" src="pahintulot.mp3" preload="metadata"></audio>
+        <div class="audio-controls">
+          <button onclick="playAudio('audio8')">Play</button>
+          <input type="range" id="seek8" value="0" min="0" max="100" step="1" onchange="seekAudio('audio8', this.value)" aria-label="New Song Slot 4 progress">
+        </div>
+      </div>
+    </div>
+    <button class="description-button" onclick="toggleDescription('desc8')">Show Description</button>
+    <div id="desc8" class="description">
+      New song slot. Add your own caption, memory, or dedication here.
+    </div>
+  </div>
+
   <script>
+    function getAudioNumber(audioId) {
+      return audioId.replace('audio', '');
+    }
+
+    function updateSeekBar(audio) {
+      const audioNumber = getAudioNumber(audio.id);
+      const seekBar = document.getElementById(`seek${audioNumber}`);
+
+      if (!seekBar || !audio.duration) {
+        return;
+      }
+
+      seekBar.value = (audio.currentTime / audio.duration) * 100;
+    }
+
+    function updatePlayButton(audio, label) {
+      const button = audio.closest('.audio-player')?.querySelector('button');
+
+      if (button) {
+        button.textContent = label;
+      }
+    }
+
     function playAudio(audioId) {
       const audio = document.getElementById(audioId);
-      const clickedButton = audio.closest('.audio-player').querySelector('button');
 
       document.querySelectorAll('audio').forEach((otherAudio) => {
         if (otherAudio !== audio) {
           otherAudio.pause();
-          const otherButton = otherAudio.closest('.audio-player')?.querySelector('button');
-          if (otherButton) {
-            otherButton.textContent = 'Play';
-          }
+          updatePlayButton(otherAudio, 'Play');
         }
       });
 
       if (audio.paused) {
         audio.play();
-        clickedButton.textContent = 'Pause';
+        updatePlayButton(audio, 'Pause');
       } else {
         audio.pause();
-        clickedButton.textContent = 'Play';
+        updatePlayButton(audio, 'Play');
       }
-
-      audio.addEventListener('timeupdate', function() {
-        const seekBar = document.getElementById('seek' + audioId.charAt(audioId.length - 1));
-        seekBar.value = (audio.currentTime / audio.duration) * 100;
-      });
     }
 
     function seekAudio(audioId, value) {
       const audio = document.getElementById(audioId);
-      audio.currentTime = (value / 100) * audio.duration;
+
+      if (audio.duration) {
+        audio.currentTime = (value / 100) * audio.duration;
+      }
     }
 
     function toggleDescription(descId) {
       const description = document.getElementById(descId);
       description.classList.toggle('show');
     }
+
+    document.querySelectorAll('audio').forEach((audio) => {
+      audio.addEventListener('timeupdate', () => updateSeekBar(audio));
+      audio.addEventListener('ended', () => updatePlayButton(audio, 'Play'));
+      audio.addEventListener('pause', () => {
+        if (audio.currentTime !== audio.duration) {
+          updatePlayButton(audio, 'Play');
+        }
+      });
+    });
   </script>
   <script src="polish.js"></script>
 </body>
