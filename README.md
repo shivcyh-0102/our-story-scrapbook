@@ -1,50 +1,53 @@
-# Our Memory Archive
+# Our Memory Archive 🌸
 
-A personal digital scrapbook website for preserving meaningful memories, photos, music, important dates, and the story of a relationship that lasted from **December 20, 2023** to **April 14, 2026**.
+A soft, personal digital scrapbook preserving the story of a relationship — its moments, music, and memories — from **December 20, 2023** to **April 14, 2026**.
 
-## About
+> *846 days. Every single one, kept.*
 
-This website was made as a soft and personal memory archive. It includes a written story, a photo gallery, a playlist, and a paused relationship timeline that no longer counts forward after the relationship ended.
+---
 
-## Features
+## What This Is
 
-- Clean and rounded modern UI
-- Mobile-friendly bottom navigation
-- Smooth page transitions
-- Apple/iPhone-inspired music player design
-- Photo gallery with fullscreen preview
-- Paused "How Long We've Been Together" page
-- About Us section with a cleaner story layout
-- Personal playlist and memory pages
+This is a static website built as a memory archive — not a countdown, not a live tracker, but a quiet place to hold something that mattered. It includes a written story, a photo gallery, a personal playlist, and a relationship timeline that has been intentionally paused.
+
+---
 
 ## Pages
 
-- `index.html` - Main homepage and About Us section
-- `gallery.html` - Photo gallery
-- `playlist.html` - Music playlist
-- `howlong.html` - Paused relationship timeline
-- `allaboutyou.html` - Personal dedication page
-- `polish.css` - Shared UI styling
-- `polish.js` - Page transitions and navigation behavior
+| File | What's Inside |
+|------|--------------|
+| `index.html` | Homepage and About Us section |
+| `gallery.html` | Photo gallery with fullscreen preview |
+| `playlist.html` | Personal music playlist |
+| `howlong.html` | Paused relationship timeline |
+| `allaboutyou.html` | A personal dedication page |
+| `polish.css` | Shared UI styles |
+| `polish.js` | Page transitions and navigation |
+
+---
+
+## Features
+
+- Clean, rounded modern UI with smooth page transitions
+- Mobile-friendly bottom navigation
+- Apple-inspired music player design
+- Photo gallery with fullscreen preview
+- Relationship timer **intentionally paused** at 846 days
+
+---
 
 ## Timeline
 
-The relationship timer is intentionally paused.
+| | |
+|--|--|
+| **Started** | December 20, 2023 |
+| **Ended** | April 14, 2026 |
+| **Total** | 846 days |
 
-**Started:** December 20, 2023  
-**Ended:** April 14, 2026  
-**Total:** 846 days
+The timer no longer counts forward. It lives exactly where it stopped.
 
-## How To Open
+---
 
-Open `index.html` directly in a browser.
+## How to Open
 
-No installation is required because this is a static HTML, CSS, and JavaScript website.
-
-## Notes
-
-This project is personal and sentimental. It is designed as a memory archive rather than an active relationship countdown.
-
-## Made By
-
-Jm Gapas
+No installation needed. Just open `index.html` in any browser.
