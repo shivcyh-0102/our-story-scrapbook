@@ -73,11 +73,18 @@ section > div,
 .song > div,
 .message > div,
 .music-player > div,
-.password-container > div {
+.password-container > div,
+.navigate-grid {
   margin-top: 1rem;
 }
 
 .navbar {
+  position: fixed !important;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.8rem !important;
   background: rgba(255, 250, 246, 0.82) !important;
   border: 1px solid var(--line);
   border-radius: var(--round-radius);
@@ -101,6 +108,10 @@ a {
 .navbar a,
 a.button,
 .back-button {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none !important;
   border: 1px solid rgba(184, 50, 95, 0.18) !important;
   background: rgba(255, 255, 255, 0.62);
   color: var(--rose) !important;
@@ -220,6 +231,22 @@ li,
   font-size: 1.05rem;
   font-weight: 700;
   line-height: 1.55 !important;
+}
+
+.navigate-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0.8rem;
+}
+
+.navigate-grid .button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 54px;
+  width: 100%;
+  margin: 0 !important;
+  text-align: center;
 }
 
 .dedication-page {
@@ -749,6 +776,319 @@ li,
   padding: 1rem !important;
 }
 
+.messages-page {
+  max-width: none !important;
+  padding-left: clamp(1rem, 4vw, 2rem) !important;
+  padding-right: clamp(1rem, 4vw, 2rem) !important;
+}
+
+.messages-page .navbar {
+  left: 50% !important;
+  right: auto !important;
+  width: fit-content;
+  min-width: min(260px, calc(100% - 1.6rem));
+  transform: translateX(-50%);
+  padding: 0.8rem !important;
+  border: 1px solid var(--line);
+  background: rgba(255, 250, 246, 0.82) !important;
+  box-shadow: 0 10px 30px rgba(80, 38, 54, 0.08) !important;
+  backdrop-filter: blur(18px);
+}
+
+.messages-page .navbar .back-button {
+  min-height: 46px;
+  padding: 0.7rem 1rem;
+  background: rgba(255, 255, 255, 0.62);
+  box-shadow: 0 8px 20px rgba(184, 50, 95, 0.08);
+}
+
+.messages-hero {
+  position: relative;
+  width: min(100%, 980px);
+  margin-left: auto !important;
+  margin-right: auto !important;
+  padding: clamp(1.5rem, 5vw, 3.5rem) !important;
+  overflow: hidden;
+  text-align: center;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.92), rgba(255, 244, 241, 0.76)),
+    radial-gradient(circle at 18% 10%, rgba(247, 176, 141, 0.3), transparent 16rem),
+    radial-gradient(circle at 88% 22%, rgba(184, 50, 95, 0.18), transparent 16rem) !important;
+}
+
+.messages-hero::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: clamp(0.9rem, 3vw, 1.35rem);
+  width: min(72%, 540px);
+  height: 1px;
+  transform: translateX(-50%);
+  background: linear-gradient(90deg, transparent, rgba(184, 50, 95, 0.24), transparent);
+}
+
+.messages-hero h1 {
+  margin: 0.15rem 0 0.75rem !important;
+  font-size: clamp(2.45rem, 8vw, 5rem) !important;
+}
+
+.messages-hero p {
+  max-width: 650px;
+  margin: 0 auto;
+  line-height: 1.75;
+}
+
+.messages-layout {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.88fr) minmax(0, 1.12fr);
+  gap: clamp(1rem, 4vw, 1.6rem);
+  width: min(100%, 980px);
+  margin: clamp(1.2rem, 3vw, 2rem) auto 0;
+  align-items: start;
+}
+
+.owner-lock,
+.message-composer,
+.message-archive,
+.saved-message,
+.empty-state {
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.9), rgba(255, 244, 241, 0.68));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.88),
+    0 22px 52px rgba(80, 38, 54, 0.14);
+  backdrop-filter: blur(16px);
+}
+
+.owner-lock,
+.message-composer,
+.message-archive {
+  border-radius: 36px;
+  padding: clamp(1.05rem, 4vw, 1.6rem);
+}
+
+.owner-lock,
+.message-composer {
+  position: sticky;
+  top: 7.5rem;
+}
+
+.composer-heading h2,
+.archive-heading h2 {
+  margin: 0.8rem 0 0.35rem;
+}
+
+.composer-heading p,
+.archive-heading p {
+  margin: 0;
+  line-height: 1.65;
+}
+
+.message-form {
+  display: grid;
+  gap: 0.85rem;
+  margin-top: 1.2rem;
+}
+
+.message-form label {
+  color: var(--rose-dark);
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.message-form textarea {
+  width: 100%;
+  min-height: 220px;
+  resize: vertical;
+  border: 1px solid rgba(184, 50, 95, 0.16);
+  border-radius: 28px;
+  padding: 1rem;
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.7);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.85);
+  font: inherit;
+  line-height: 1.7;
+  outline: none;
+  transition: border-color 180ms ease, box-shadow 180ms ease, background 180ms ease;
+}
+
+.message-form input {
+  width: 100%;
+  min-height: 52px;
+  border: 1px solid rgba(184, 50, 95, 0.16);
+  border-radius: var(--round-radius);
+  padding: 0 1rem;
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.7);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.85);
+  font: inherit;
+  outline: none;
+  transition: border-color 180ms ease, box-shadow 180ms ease, background 180ms ease;
+}
+
+.message-form textarea:focus {
+  border-color: rgba(184, 50, 95, 0.42);
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 0 0 4px rgba(184, 50, 95, 0.1);
+}
+
+.message-form input:focus {
+  border-color: rgba(184, 50, 95, 0.42);
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 0 0 4px rgba(184, 50, 95, 0.1);
+}
+
+.form-error {
+  min-height: 1.4rem;
+  margin: -0.25rem 0 0;
+  color: var(--rose-dark) !important;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.composer-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+}
+
+.composer-actions button,
+.delete-message,
+.ghost-button {
+  min-height: 44px;
+  border-radius: var(--round-radius);
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform 200ms ease, box-shadow 200ms ease, background 200ms ease, color 200ms ease;
+}
+
+.message-form .submit-button {
+  width: fit-content;
+  min-height: 44px;
+  border-radius: var(--round-radius) !important;
+  padding: 0.72rem 1.15rem;
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.composer-actions button:hover,
+.delete-message:hover,
+.ghost-button:hover {
+  transform: translateY(-1px);
+}
+
+.ghost-button,
+.delete-message {
+  border: 1px solid rgba(184, 50, 95, 0.18);
+  color: var(--rose);
+  background: rgba(255, 255, 255, 0.62);
+  box-shadow: 0 10px 24px rgba(80, 38, 54, 0.08);
+}
+
+.ghost-button:hover,
+.delete-message:hover {
+  color: #fff;
+  background: var(--rose);
+}
+
+.ghost-button {
+  padding: 0.72rem 1.05rem;
+}
+
+.messages-list {
+  display: grid;
+  gap: 0.9rem;
+  margin-top: 1rem;
+}
+
+.saved-message {
+  position: relative;
+  display: grid;
+  gap: 0.8rem;
+  border-radius: 30px;
+  padding: clamp(1rem, 3vw, 1.25rem);
+  overflow: hidden;
+}
+
+.saved-message::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 4px;
+  background: linear-gradient(180deg, var(--rose), var(--peach));
+}
+
+.message-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.55rem;
+}
+
+.message-meta span,
+.message-meta time {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  padding: 0.35rem 0.7rem;
+  border: 1px solid rgba(184, 50, 95, 0.12);
+  border-radius: var(--round-radius);
+  background: rgba(255, 255, 255, 0.62);
+  color: var(--rose-dark);
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.message-meta time {
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.saved-message p {
+  margin: 0;
+  color: var(--muted) !important;
+  line-height: 1.82;
+  white-space: pre-wrap;
+}
+
+.delete-message {
+  justify-self: end;
+  padding: 0.58rem 0.9rem;
+}
+
+.empty-state {
+  display: grid;
+  gap: 0.35rem;
+  margin-top: 1rem;
+  border-radius: 30px;
+  padding: clamp(1rem, 4vw, 1.35rem);
+  color: var(--muted);
+  text-align: center;
+}
+
+.empty-state strong {
+  color: var(--rose-dark);
+  font-size: 1.05rem;
+}
+
+.empty-state[hidden] {
+  display: none;
+}
+
+[hidden] {
+  display: none !important;
+}
+
 .photo-card img {
   aspect-ratio: 4 / 5;
   object-fit: cover;
@@ -1128,6 +1468,35 @@ footer {
   .playlist-page .description-button {
     margin-left: auto;
     margin-right: auto;
+  }
+
+  .messages-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .owner-lock,
+  .message-composer {
+    position: static;
+  }
+
+  .composer-actions {
+    display: grid;
+  }
+
+  .composer-actions button {
+    width: 100%;
+  }
+
+  .message-meta {
+    display: grid;
+    justify-content: stretch;
+  }
+
+  .message-meta span,
+  .message-meta time,
+  .delete-message {
+    width: 100%;
+    justify-content: center;
   }
 
 }

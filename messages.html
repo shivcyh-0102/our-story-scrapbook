@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Messages for You</title>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="polish.css">
+</head>
+<body class="messages-page">
+  <div class="navbar">
+    <a href="index.html" class="back-button">Back to Home</a>
+  </div>
+
+  <header class="messages-hero">
+    <span class="memory-stamp">Private Notes</span>
+    <h1>Messages for You</h1>
+    <p>A quiet space for words I still want to leave behind.</p>
+  </header>
+
+  <main class="messages-layout">
+    <section id="ownerLock" class="owner-lock" aria-labelledby="lockTitle">
+      <div class="composer-heading">
+        <span class="section-label">Owner Mode</span>
+        <h2 id="lockTitle">Unlock Writer</h2>
+        <p>Messages can be read here, but writing and deleting are locked so only you can manage them.</p>
+      </div>
+
+      <form id="unlockForm" class="message-form">
+        <label for="ownerCode">Passcode</label>
+        <input id="ownerCode" name="ownerCode" type="password" inputmode="numeric" autocomplete="off" placeholder="Enter owner passcode" required>
+        <p id="unlockError" class="form-error" role="alert"></p>
+        <button class="submit-button" type="submit">Unlock</button>
+      </form>
+    </section>
+
+    <section id="messageComposer" class="message-composer" aria-labelledby="composerTitle" hidden>
+      <div class="composer-heading">
+        <span class="section-label">Write</span>
+        <h2 id="composerTitle">Leave a Message</h2>
+        <p>Type anything you want her to read someday. The page will save it here on this browser.</p>
+      </div>
+
+      <form id="messageForm" class="message-form">
+        <label for="messageText">Message</label>
+        <textarea id="messageText" name="messageText" rows="8" placeholder="Write your message here..." required></textarea>
+
+        <div class="composer-actions">
+          <button class="submit-button" type="submit">Save Message</button>
+          <button class="ghost-button" type="button" id="clearDraftButton">Clear Draft</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="message-archive" aria-labelledby="archiveTitle">
+      <div class="archive-heading">
+        <span class="section-label">Archive</span>
+        <h2 id="archiveTitle">Saved Messages</h2>
+        <p id="messageCount">0 messages saved</p>
+      </div>
+
+      <div id="emptyState" class="empty-state">
+        <strong>No messages yet.</strong>
+        <span>Your saved notes will appear here with the date and time.</span>
+      </div>
+
+      <div id="messagesList" class="messages-list" aria-live="polite"></div>
+    </section>
+  </main>
+
+  <script>
+    const STORAGE_KEY = "ourWebsite.messagesForYou";
+    const OWNER_SESSION_KEY = "ourWebsite.messagesOwnerUnlocked";
+    const OWNER_PASSCODE = "12202023";
+    const ownerLock = document.getElementById("ownerLock");
+    const unlockForm = document.getElementById("unlockForm");
+    const ownerCode = document.getElementById("ownerCode");
+    const unlockError = document.getElementById("unlockError");
+    const composer = document.getElementById("messageComposer");
+    const form = document.getElementById("messageForm");
+    const textarea = document.getElementById("messageText");
+    const list = document.getElementById("messagesList");
+    const emptyState = document.getElementById("emptyState");
+    const messageCount = document.getElementById("messageCount");
+    const clearDraftButton = document.getElementById("clearDraftButton");
+
+    function getMessages() {
+      try {
+        return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+      } catch {
+        return [];
+      }
+    }
+
+    function isOwnerUnlocked() {
+      return sessionStorage.getItem(OWNER_SESSION_KEY) === "true";
+    }
+
+    function setOwnerMode(isUnlocked) {
+      ownerLock.hidden = isUnlocked;
+      composer.hidden = !isUnlocked;
+      renderMessages();
+
+      if (isUnlocked) {
+        textarea.focus();
+      }
+    }
+
+    function saveMessages(messages) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(messages));
+    }
+
+    function formatStamp(dateValue) {
+      const date = new Date(dateValue);
+      return new Intl.DateTimeFormat("en-PH", {
+        dateStyle: "medium",
+        timeStyle: "short"
+      }).format(date);
+    }
+
+    function updateCount(messages) {
+      const count = messages.length;
+      messageCount.textContent = count === 1 ? "1 message saved" : `${count} messages saved`;
+      emptyState.hidden = count > 0;
+    }
+
+    function createMessageCard(message, index) {
+      const article = document.createElement("article");
+      article.className = "saved-message";
+
+      const meta = document.createElement("div");
+      meta.className = "message-meta";
+
+      const number = document.createElement("span");
+      number.textContent = `Note ${String(index + 1).padStart(2, "0")}`;
+
+      const time = document.createElement("time");
+      time.dateTime = message.createdAt;
+      time.textContent = formatStamp(message.createdAt);
+
+      const content = document.createElement("p");
+      content.textContent = message.text;
+
+      meta.append(number, time);
+      article.append(meta, content);
+
+      if (isOwnerUnlocked()) {
+        const deleteButton = document.createElement("button");
+        deleteButton.className = "delete-message";
+        deleteButton.type = "button";
+        deleteButton.textContent = "Delete";
+        deleteButton.setAttribute("aria-label", `Delete message from ${time.textContent}`);
+        deleteButton.addEventListener("click", () => {
+          const messages = getMessages().filter((item) => item.id !== message.id);
+          saveMessages(messages);
+          renderMessages();
+        });
+        article.appendChild(deleteButton);
+      }
+
+      return article;
+    }
+
+    function renderMessages() {
+      const messages = getMessages().sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+      list.innerHTML = "";
+      messages.forEach((message, index) => {
+        list.appendChild(createMessageCard(message, index));
+      });
+      updateCount(messages);
+    }
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      if (!isOwnerUnlocked()) {
+        return;
+      }
+
+      const text = textarea.value.trim();
+
+      if (!text) {
+        textarea.focus();
+        return;
+      }
+
+      const messages = getMessages();
+      messages.push({
+        id: `${Date.now()}-${crypto.getRandomValues(new Uint32Array(1))[0]}`,
+        text,
+        createdAt: new Date().toISOString()
+      });
+
+      saveMessages(messages);
+      textarea.value = "";
+      renderMessages();
+      textarea.focus();
+    });
+
+    clearDraftButton.addEventListener("click", () => {
+      textarea.value = "";
+      textarea.focus();
+    });
+
+    unlockForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      if (ownerCode.value === OWNER_PASSCODE) {
+        sessionStorage.setItem(OWNER_SESSION_KEY, "true");
+        unlockError.textContent = "";
+        ownerCode.value = "";
+        setOwnerMode(true);
+        return;
+      }
+
+      unlockError.textContent = "Wrong passcode. Try again.";
+      ownerCode.select();
+    });
+
+    setOwnerMode(isOwnerUnlocked());
+  </script>
+  <script src="polish.js"></script>
+</body>
+</html>
