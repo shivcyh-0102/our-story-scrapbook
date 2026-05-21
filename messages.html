@@ -19,22 +19,7 @@
   </header>
 
   <main class="messages-layout">
-    <section id="ownerLock" class="owner-lock" aria-labelledby="lockTitle">
-      <div class="composer-heading">
-        <span class="section-label">Owner Mode</span>
-        <h2 id="lockTitle">Unlock Writer</h2>
-        <p>Messages can be read here, but writing and deleting are locked so only you can manage them.</p>
-      </div>
-
-      <form id="unlockForm" class="message-form">
-        <label for="ownerCode">Passcode</label>
-        <input id="ownerCode" name="ownerCode" type="password" inputmode="numeric" autocomplete="off" placeholder="Enter owner passcode" required>
-        <p id="unlockError" class="form-error" role="alert"></p>
-        <button class="submit-button" type="submit">Unlock</button>
-      </form>
-    </section>
-
-    <section id="messageComposer" class="message-composer" aria-labelledby="composerTitle" hidden>
+    <section class="message-composer" aria-labelledby="composerTitle">
       <div class="composer-heading">
         <span class="section-label">Write</span>
         <h2 id="composerTitle">Leave a Message</h2>
@@ -70,13 +55,6 @@
 
   <script>
     const STORAGE_KEY = "ourWebsite.messagesForYou";
-    const OWNER_SESSION_KEY = "ourWebsite.messagesOwnerUnlocked";
-    const OWNER_PASSCODE = "12202023";
-    const ownerLock = document.getElementById("ownerLock");
-    const unlockForm = document.getElementById("unlockForm");
-    const ownerCode = document.getElementById("ownerCode");
-    const unlockError = document.getElementById("unlockError");
-    const composer = document.getElementById("messageComposer");
     const form = document.getElementById("messageForm");
     const textarea = document.getElementById("messageText");
     const list = document.getElementById("messagesList");
@@ -89,20 +67,6 @@
         return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
       } catch {
         return [];
-      }
-    }
-
-    function isOwnerUnlocked() {
-      return sessionStorage.getItem(OWNER_SESSION_KEY) === "true";
-    }
-
-    function setOwnerMode(isUnlocked) {
-      ownerLock.hidden = isUnlocked;
-      composer.hidden = !isUnlocked;
-      renderMessages();
-
-      if (isUnlocked) {
-        textarea.focus();
       }
     }
 
@@ -141,23 +105,19 @@
       const content = document.createElement("p");
       content.textContent = message.text;
 
+      const deleteButton = document.createElement("button");
+      deleteButton.className = "delete-message";
+      deleteButton.type = "button";
+      deleteButton.textContent = "Delete";
+      deleteButton.setAttribute("aria-label", `Delete message from ${time.textContent}`);
+      deleteButton.addEventListener("click", () => {
+        const messages = getMessages().filter((item) => item.id !== message.id);
+        saveMessages(messages);
+        renderMessages();
+      });
+
       meta.append(number, time);
-      article.append(meta, content);
-
-      if (isOwnerUnlocked()) {
-        const deleteButton = document.createElement("button");
-        deleteButton.className = "delete-message";
-        deleteButton.type = "button";
-        deleteButton.textContent = "Delete";
-        deleteButton.setAttribute("aria-label", `Delete message from ${time.textContent}`);
-        deleteButton.addEventListener("click", () => {
-          const messages = getMessages().filter((item) => item.id !== message.id);
-          saveMessages(messages);
-          renderMessages();
-        });
-        article.appendChild(deleteButton);
-      }
-
+      article.append(meta, content, deleteButton);
       return article;
     }
 
@@ -172,11 +132,6 @@
 
     form.addEventListener("submit", (event) => {
       event.preventDefault();
-
-      if (!isOwnerUnlocked()) {
-        return;
-      }
-
       const text = textarea.value.trim();
 
       if (!text) {
@@ -202,22 +157,7 @@
       textarea.focus();
     });
 
-    unlockForm.addEventListener("submit", (event) => {
-      event.preventDefault();
-
-      if (ownerCode.value === OWNER_PASSCODE) {
-        sessionStorage.setItem(OWNER_SESSION_KEY, "true");
-        unlockError.textContent = "";
-        ownerCode.value = "";
-        setOwnerMode(true);
-        return;
-      }
-
-      unlockError.textContent = "Wrong passcode. Try again.";
-      ownerCode.select();
-    });
-
-    setOwnerMode(isOwnerUnlocked());
+    renderMessages();
   </script>
   <script src="polish.js"></script>
 </body>
