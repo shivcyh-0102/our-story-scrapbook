@@ -256,6 +256,7 @@
 
   <img src="https://pngimg.com/uploads/hello_kitty/hello_kitty_PNG47.png" alt="Hello Kitty" class="hello-kitty" loading="lazy" decoding="async" />
 
+  <main class="playlist-stack" aria-label="Memory playlist">
   <div class="song">
     <h2>Your Universe</h2>
     <p>Rico Blanco</p>
@@ -272,7 +273,7 @@
         </div>
       </div>
     </div>
-    <button class="description-button" onclick="toggleDescription('desc1')">Show Description</button>
+    <button class="description-button" onclick="toggleDescription('desc1', this)" aria-expanded="false">Show Description</button>
     <div id="desc1" class="description">
     i dedicated this song to you kasi it reminds me of how much you mean to me, and how your presence is so important to me. Even if you think na you're lucky to have me, the truth is, I'm the lucky one.
     </div>
@@ -294,7 +295,7 @@
         </div>
       </div>
     </div>
-    <button class="description-button" onclick="toggleDescription('desc2')">Show Description</button>
+    <button class="description-button" onclick="toggleDescription('desc2', this)" aria-expanded="false">Show Description</button>
     <div id="desc2" class="description">
      I’m dedicating this song to you kasi I see something beautiful in what we have right now and i know that it's something real, something worth trying for. this song reminds me of how I feel about taking chances not just in life, but in love. Especially with you. And in the end, I really want to make it with you, my lovelove.
     </div>
@@ -316,7 +317,7 @@
         </div>
       </div>
     </div>
-    <button class="description-button" onclick="toggleDescription('desc3')">Show Description</button>
+    <button class="description-button" onclick="toggleDescription('desc3', this)" aria-expanded="false">Show Description</button>
     <div id="desc3" class="description">
      
 I dedicate this song to you because my love isn’t just for now, hindi lang to pang mabilisan, it’s for every version of you, even the one with gray or white hair, tired eyes, and quiet days. my love for you isn't just about kissing and sweet messages, it's about choosing you again and again, even as time changes everything else.
@@ -340,7 +341,7 @@ And if I’m lucky, I’ll grow old with you, ikaw at ikaw pa rin ang pipiliin k
         </div>
       </div>
     </div>
-    <button class="description-button" onclick="toggleDescription('desc4')">Show Description</button>
+    <button class="description-button" onclick="toggleDescription('desc4', this)" aria-expanded="false">Show Description</button>
     <div id="desc4" class="description">
       I dedicated this song for you nung nanliligaw pa lang ako<br>
       and yes, alam kong hindi mo to alam kasi di ko naman sinabi sa 'yo hehe,<br>
@@ -357,8 +358,8 @@ And if I’m lucky, I’ll grow old with you, ikaw at ikaw pa rin ang pipiliin k
   </div>
 
   <div class="song">
-    <h2>New Song Slot 1</h2>
-    <p>Artist Name</p>
+    <h2>About You</h2>
+    <p>The 1975</p>
     <div class="music-player">
       <div class="album-wrapper">
         <div class="music-notes">♪</div>
@@ -368,81 +369,38 @@ And if I’m lucky, I’ll grow old with you, ikaw at ikaw pa rin ang pipiliin k
         <audio id="audio5" src="about you.mp3" preload="metadata"></audio>
         <div class="audio-controls">
           <button onclick="playAudio('audio5')">Play</button>
-          <input type="range" id="seek5" value="0" min="0" max="100" step="1" onchange="seekAudio('audio5', this.value)" aria-label="New Song Slot 1 progress">
+          <input type="range" id="seek5" value="0" min="0" max="100" step="1" onchange="seekAudio('audio5', this.value)" aria-label="About You progress">
         </div>
       </div>
     </div>
-    <button class="description-button" onclick="toggleDescription('desc5')">Show Description</button>
+    <button class="description-button" onclick="toggleDescription('desc5', this)" aria-expanded="false">Show Description</button>
     <div id="desc5" class="description">
-      New song slot. Replace the title, artist, album cover, audio file, and description anytime.
+      I dedicate this song for you because it's a reminder of the permanent footprint you left on my life. Time moves on and things change, but there are still certain moments, songs, and places where I'll always look around and think of you
     </div>
   </div>
 
   <div class="song">
-    <h2>New Song Slot 2</h2>
-    <p>Artist Name</p>
+    <h2>Paradise</h2>
+    <p>Chase Atlantic</p>
     <div class="music-player">
       <div class="album-wrapper">
         <div class="music-notes">♪</div>
-        <img src="rico.jpg" alt="Album Cover 6" class="album-art" loading="lazy" decoding="async" />
+        <img src="paradise.jpg" alt="Album Cover 6" class="album-art" loading="lazy" decoding="async" />
       </div>
       <div class="audio-player">
-        <audio id="audio6" src="youruniverse.mp3" preload="metadata"></audio>
+        <audio id="audio6" src="Paradise.mp3" preload="metadata"></audio>
         <div class="audio-controls">
           <button onclick="playAudio('audio6')">Play</button>
-          <input type="range" id="seek6" value="0" min="0" max="100" step="1" onchange="seekAudio('audio6', this.value)" aria-label="New Song Slot 2 progress">
+          <input type="range" id="seek6" value="0" min="0" max="100" step="1" onchange="seekAudio('audio6', this.value)" aria-label="Paradise progress">
         </div>
       </div>
     </div>
-    <button class="description-button" onclick="toggleDescription('desc6')">Show Description</button>
+    <button class="description-button" onclick="toggleDescription('desc6', this)" aria-expanded="false">Show Description</button>
     <div id="desc6" class="description">
-      New song slot. Customize this with another song that belongs in the archive.
+      This is the first Chase Atlantic song I listened to, and it became my favorite because of you
     </div>
   </div>
-
-  <div class="song">
-    <h2>New Song Slot 3</h2>
-    <p>Artist Name</p>
-    <div class="music-player">
-      <div class="album-wrapper">
-        <div class="music-notes">♪</div>
-        <img src="makeitwithyou.jpg" alt="Album Cover 7" class="album-art" loading="lazy" decoding="async" />
-      </div>
-      <div class="audio-player">
-        <audio id="audio7" src="makeitwithyou.mp3" preload="metadata"></audio>
-        <div class="audio-controls">
-          <button onclick="playAudio('audio7')">Play</button>
-          <input type="range" id="seek7" value="0" min="0" max="100" step="1" onchange="seekAudio('audio7', this.value)" aria-label="New Song Slot 3 progress">
-        </div>
-      </div>
-    </div>
-    <button class="description-button" onclick="toggleDescription('desc7')">Show Description</button>
-    <div id="desc7" class="description">
-      New song slot. Swap this placeholder with your own song details later.
-    </div>
-  </div>
-
-  <div class="song">
-    <h2>New Song Slot 4</h2>
-    <p>Artist Name</p>
-    <div class="music-player">
-      <div class="album-wrapper">
-        <div class="music-notes">♪</div>
-        <img src="kami.jpg" alt="Album Cover 8" class="album-art" loading="lazy" decoding="async" />
-      </div>
-      <div class="audio-player">
-        <audio id="audio8" src="pahintulot.mp3" preload="metadata"></audio>
-        <div class="audio-controls">
-          <button onclick="playAudio('audio8')">Play</button>
-          <input type="range" id="seek8" value="0" min="0" max="100" step="1" onchange="seekAudio('audio8', this.value)" aria-label="New Song Slot 4 progress">
-        </div>
-      </div>
-    </div>
-    <button class="description-button" onclick="toggleDescription('desc8')">Show Description</button>
-    <div id="desc8" class="description">
-      New song slot. Add your own caption, memory, or dedication here.
-    </div>
-  </div>
+  </main>
 
   <script>
     function getAudioNumber(audioId) {
@@ -495,9 +453,14 @@ And if I’m lucky, I’ll grow old with you, ikaw at ikaw pa rin ang pipiliin k
       }
     }
 
-    function toggleDescription(descId) {
+    function toggleDescription(descId, button) {
       const description = document.getElementById(descId);
-      description.classList.toggle('show');
+      const isOpen = description.classList.toggle('show');
+
+      if (button) {
+        button.textContent = isOpen ? 'Hide Description' : 'Show Description';
+        button.setAttribute('aria-expanded', String(isOpen));
+      }
     }
 
     document.querySelectorAll('audio').forEach((audio) => {
