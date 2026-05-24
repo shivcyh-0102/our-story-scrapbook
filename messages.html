@@ -4,13 +4,635 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Messages for You</title>
-  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="polish.css">
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink: #1a1612;
+      --ink-soft: #5c5449;
+      --ink-ghost: #a09890;
+      --parchment: #faf7f2;
+      --parchment-warm: #f3ede3;
+      --parchment-deep: #e8ddd0;
+      --sepia: #c4a882;
+      --sepia-dark: #8b6c4a;
+      --rose: #c97b7b;
+      --rose-pale: #f5eaea;
+      --line: rgba(140, 110, 80, 0.18);
+      --line-soft: rgba(140, 110, 80, 0.10);
+      --shadow: 0 2px 16px rgba(60, 40, 20, 0.10);
+      --shadow-card: 0 4px 32px rgba(60, 40, 20, 0.12);
+      --radius: 14px;
+      --radius-sm: 8px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--parchment);
+      color: var(--ink);
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    /* NAVBAR */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2rem;
+      height: 56px;
+      background: rgba(250, 247, 242, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .back-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--ink-soft);
+      text-decoration: none;
+      padding: 6px 14px;
+      border-radius: 20px;
+      border: 1px solid var(--line);
+      transition: all 0.2s;
+    }
+    .back-button:hover {
+      color: var(--ink);
+      background: var(--parchment-warm);
+      border-color: var(--sepia);
+    }
+
+    .nav-brand {
+      font-family: 'Lora', serif;
+      font-size: 15px;
+      color: var(--ink-ghost);
+      letter-spacing: 0.04em;
+    }
+
+    /* HERO */
+    .messages-hero {
+      text-align: center;
+      padding: 64px 2rem 48px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .messages-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 60% at 50% 0%, rgba(196, 168, 130, 0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .memory-stamp {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--sepia-dark);
+      background: var(--parchment-deep);
+      border: 1px solid var(--sepia);
+      padding: 4px 14px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+    }
+
+    .messages-hero h1 {
+      font-family: 'Lora', serif;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 600;
+      color: var(--ink);
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+
+    .messages-hero p {
+      font-size: 16px;
+      color: var(--ink-soft);
+      font-style: italic;
+      font-family: 'Lora', serif;
+    }
+
+    /* MAIN LAYOUT */
+    .messages-layout {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 2rem 80px;
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 2.5rem;
+      align-items: start;
+    }
+
+    @media (max-width: 760px) {
+      .messages-layout { grid-template-columns: 1fr; }
+    }
+
+    /* SECTION LABELS */
+    .section-label {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--sepia-dark);
+    }
+
+    /* COMPOSER */
+    .message-composer {
+      background: #fff;
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow-card);
+      padding: 2rem;
+      position: sticky;
+      top: 72px;
+    }
+
+    .composer-heading {
+      margin-bottom: 1.5rem;
+    }
+
+    .composer-heading h2 {
+      font-family: 'Lora', serif;
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin: 6px 0 8px;
+    }
+
+    .composer-heading p {
+      font-size: 13.5px;
+      color: var(--ink-ghost);
+      line-height: 1.5;
+    }
+
+    .message-form label {
+      display: block;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      margin-bottom: 8px;
+    }
+
+    .message-form textarea {
+      width: 100%;
+      border: 1px solid var(--line);
+      background: var(--parchment);
+      border-radius: var(--radius-sm);
+      padding: 14px 16px;
+      font-family: 'Lora', serif;
+      font-size: 15px;
+      line-height: 1.8;
+      color: var(--ink);
+      resize: vertical;
+      min-height: 180px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+    }
+
+    .message-form textarea::placeholder {
+      color: var(--ink-ghost);
+      font-style: italic;
+    }
+
+    .message-form textarea:focus {
+      border-color: var(--sepia);
+      box-shadow: 0 0 0 3px rgba(196, 168, 130, 0.15);
+      background: #fff;
+    }
+
+    .char-counter {
+      display: flex;
+      justify-content: flex-end;
+      font-size: 12px;
+      color: var(--ink-ghost);
+      margin: 6px 0 16px;
+      transition: color 0.2s;
+    }
+    .char-counter.warn { color: var(--rose); }
+
+    .composer-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .submit-button {
+      flex: 1;
+      padding: 11px 20px;
+      background: var(--ink);
+      color: var(--parchment);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      border: none;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+    }
+
+    .submit-button:hover {
+      background: var(--sepia-dark);
+      transform: translateY(-1px);
+    }
+
+    .submit-button:active { transform: translateY(0); }
+
+    .submit-button.saving {
+      background: var(--sepia);
+      pointer-events: none;
+    }
+
+    .ghost-button {
+      padding: 11px 16px;
+      background: transparent;
+      color: var(--ink-soft);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .ghost-button:hover {
+      background: var(--parchment-warm);
+      border-color: var(--sepia);
+      color: var(--ink);
+    }
+
+    /* STATUS BAR */
+    .status-bar {
+      margin-top: 14px;
+      min-height: 22px;
+      font-size: 12.5px;
+      color: var(--ink-ghost);
+      text-align: center;
+      font-style: italic;
+      transition: opacity 0.4s;
+    }
+
+    .status-bar.success { color: #6a8f5e; }
+    .status-bar.error { color: var(--rose); }
+
+    /* ARCHIVE */
+    .message-archive {
+      min-height: 300px;
+    }
+
+    .archive-heading {
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .archive-heading-left h2 {
+      font-family: 'Lora', serif;
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin: 6px 0 4px;
+    }
+
+    .archive-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    #messageCount {
+      font-size: 12px;
+      color: var(--ink-ghost);
+      background: var(--parchment-warm);
+      border: 1px solid var(--line);
+      padding: 3px 10px;
+      border-radius: 20px;
+    }
+
+    .sort-toggle {
+      font-size: 12px;
+      color: var(--ink-soft);
+      background: transparent;
+      border: 1px solid var(--line);
+      padding: 4px 12px;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    .sort-toggle:hover {
+      background: var(--parchment-warm);
+      border-color: var(--sepia);
+    }
+
+    /* SEARCH */
+    .search-bar {
+      position: relative;
+      margin-bottom: 1.2rem;
+    }
+
+    .search-bar input {
+      width: 100%;
+      padding: 10px 16px 10px 38px;
+      border: 1px solid var(--line);
+      background: var(--parchment);
+      border-radius: 30px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13.5px;
+      color: var(--ink);
+      outline: none;
+      transition: all 0.2s;
+    }
+
+    .search-bar input::placeholder { color: var(--ink-ghost); }
+
+    .search-bar input:focus {
+      border-color: var(--sepia);
+      background: #fff;
+      box-shadow: 0 0 0 3px rgba(196, 168, 130, 0.12);
+    }
+
+    .search-bar svg {
+      position: absolute;
+      left: 13px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--ink-ghost);
+      pointer-events: none;
+    }
+
+    /* EMPTY STATE */
+    .empty-state {
+      text-align: center;
+      padding: 60px 2rem;
+      color: var(--ink-ghost);
+    }
+
+    .empty-state svg {
+      margin-bottom: 16px;
+      opacity: 0.4;
+    }
+
+    .empty-state strong {
+      display: block;
+      font-family: 'Lora', serif;
+      font-size: 1rem;
+      color: var(--ink-soft);
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .empty-state span {
+      font-size: 13.5px;
+      line-height: 1.6;
+    }
+
+    /* MESSAGES LIST */
+    .messages-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    /* MESSAGE CARD */
+    .saved-message {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.4rem;
+      box-shadow: var(--shadow);
+      transition: box-shadow 0.2s, transform 0.2s;
+      animation: cardIn 0.35s ease both;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .saved-message::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background: var(--sepia);
+      opacity: 0.5;
+      border-radius: 3px 0 0 3px;
+    }
+
+    .saved-message:hover {
+      box-shadow: var(--shadow-card);
+      transform: translateY(-1px);
+    }
+
+    @keyframes cardIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .message-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .meta-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .note-number {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--sepia-dark);
+      background: var(--parchment-deep);
+      padding: 2px 9px;
+      border-radius: 20px;
+    }
+
+    .message-time {
+      font-size: 12px;
+      color: var(--ink-ghost);
+    }
+
+    .message-content {
+      font-family: 'Lora', serif;
+      font-size: 15px;
+      line-height: 1.85;
+      color: var(--ink);
+      margin-bottom: 14px;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .message-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .word-count {
+      font-size: 11.5px;
+      color: var(--ink-ghost);
+    }
+
+    .message-actions {
+      display: flex;
+      gap: 6px;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .saved-message:hover .message-actions { opacity: 1; }
+
+    .action-btn {
+      font-size: 12px;
+      font-family: 'DM Sans', sans-serif;
+      padding: 4px 12px;
+      border-radius: 20px;
+      cursor: pointer;
+      border: 1px solid var(--line);
+      background: transparent;
+      transition: all 0.18s;
+    }
+
+    .copy-btn {
+      color: var(--ink-soft);
+    }
+    .copy-btn:hover {
+      background: var(--parchment-warm);
+      border-color: var(--sepia);
+      color: var(--ink);
+    }
+    .copy-btn.copied {
+      color: #6a8f5e;
+      border-color: #6a8f5e;
+    }
+
+    .delete-btn {
+      color: var(--ink-ghost);
+    }
+    .delete-btn:hover {
+      background: var(--rose-pale);
+      border-color: var(--rose);
+      color: var(--rose);
+    }
+
+    /* LOADING */
+    .loading-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      padding: 50px 0;
+      color: var(--ink-ghost);
+      font-style: italic;
+      font-family: 'Lora', serif;
+      font-size: 14px;
+    }
+
+    .spinner {
+      width: 28px;
+      height: 28px;
+      border: 2px solid var(--parchment-deep);
+      border-top-color: var(--sepia);
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* NO RESULTS */
+    .no-results {
+      text-align: center;
+      padding: 40px;
+      color: var(--ink-ghost);
+      font-style: italic;
+      font-family: 'Lora', serif;
+      font-size: 14px;
+    }
+
+    /* DIVIDER */
+    .archive-divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 1.2rem;
+    }
+    .archive-divider::before,
+    .archive-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--line);
+    }
+    .archive-divider span {
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-ghost);
+    }
+
+    /* SCROLL TOP */
+    #scrollTop {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--ink-soft);
+      cursor: pointer;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--shadow);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+    #scrollTop.visible { opacity: 1; pointer-events: auto; }
+    #scrollTop:hover { background: var(--parchment-warm); }
+  </style>
 </head>
-<body class="messages-page">
-  <div class="navbar">
-    <a href="index.html" class="back-button">Back to Home</a>
-  </div>
+<body>
+
+  <nav class="navbar">
+    <a href="index.html" class="back-button">
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <path d="M10 3L5 8l5 5"/>
+      </svg>
+      Back to Home
+    </a>
+    <span class="nav-brand">Private Notes</span>
+  </nav>
 
   <header class="messages-hero">
     <span class="memory-stamp">Private Notes</span>
@@ -19,218 +641,343 @@
   </header>
 
   <main class="messages-layout">
+
+    <!-- COMPOSER -->
     <section class="message-composer" aria-labelledby="composerTitle">
       <div class="composer-heading">
         <span class="section-label">Write</span>
         <h2 id="composerTitle">Leave a Message</h2>
-        <p>Type anything you want her to read someday. The page will save it here on this browser.</p>
+        <p>Type anything you want her to read someday. Saved here, just for her.</p>
       </div>
 
       <form id="messageForm" class="message-form">
-        <label for="messageText">Message</label>
-        <textarea id="messageText" name="messageText" rows="8" placeholder="Write your message here..." required></textarea>
+        <label for="messageText">Your message</label>
+        <textarea id="messageText" rows="8" placeholder="Dear you…" maxlength="2000" required></textarea>
+        <div class="char-counter"><span id="charCount">0</span> / 2000</div>
 
         <div class="composer-actions">
-          <button class="submit-button" type="submit">Save Message</button>
-          <button class="ghost-button" type="button" id="clearDraftButton">Clear Draft</button>
+          <button class="submit-button" type="submit" id="submitBtn">
+            <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M2 2l12 6-12 6V9l8-1-8-1V2z"/>
+            </svg>
+            Save Message
+          </button>
+          <button class="ghost-button" type="button" id="clearDraftButton">Clear</button>
         </div>
       </form>
+
+      <div class="status-bar" id="statusBar" aria-live="polite"></div>
     </section>
 
+    <!-- ARCHIVE -->
     <section class="message-archive" aria-labelledby="archiveTitle">
+
       <div class="archive-heading">
-        <span class="section-label">Archive</span>
-        <h2 id="archiveTitle">Saved Messages</h2>
-        <p id="messageCount">0 messages saved</p>
+        <div class="archive-heading-left">
+          <span class="section-label">Archive</span>
+          <h2 id="archiveTitle">Saved Messages</h2>
+        </div>
+        <div class="archive-controls">
+          <span id="messageCount">0 messages</span>
+          <button class="sort-toggle" id="sortToggle" title="Toggle sort order">↕ Newest</button>
+        </div>
       </div>
 
-      <div id="emptyState" class="empty-state">
-        <strong>No messages yet.</strong>
-        <span>Your saved notes will appear here with the date and time.</span>
+      <div class="search-bar">
+        <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+          <circle cx="6.5" cy="6.5" r="4.5"/><path d="M10 10l3.5 3.5"/>
+        </svg>
+        <input type="search" id="searchInput" placeholder="Search your messages…" aria-label="Search messages">
       </div>
+
+      <div class="archive-divider"><span>notes</span></div>
+
+      <div id="loadingState" class="loading-state">
+        <div class="spinner"></div>
+        <span>Loading your messages…</span>
+      </div>
+
+      <div id="emptyState" class="empty-state" hidden>
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 2H4a2 2 0 00-2 2v18l4-4h14a2 2 0 002-2V4a2 2 0 00-2-2z"/>
+        </svg>
+        <strong>No messages yet.</strong>
+        <span>Your saved notes will appear here, softly timestamped.</span>
+      </div>
+
+      <div id="noResults" class="no-results" hidden>No messages match your search.</div>
 
       <div id="messagesList" class="messages-list" aria-live="polite"></div>
     </section>
+
   </main>
 
+  <button id="scrollTop" aria-label="Back to top">↑</button>
+
   <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import {
+      getFirestore, collection, addDoc, deleteDoc, doc,
+      query, orderBy, onSnapshot
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+    import {
+      getAuth, signInWithEmailAndPassword
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-
-import {
-  getFirestore,
-  collection,
-  addDoc,
-  deleteDoc,
-  doc,
-  query,
-  orderBy,
-  onSnapshot
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-import {
-  getAuth,
-  signInWithEmailAndPassword
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
-// FIREBASE CONFIG
-const firebaseConfig = {
-  apiKey: "AIzaSyBhpykAVLzNnN087gU_-B960jrAc_InlJs",
-  authDomain: "our-story-scrapbook.firebaseapp.com",
-  projectId: "our-story-scrapbook",
-  storageBucket: "our-story-scrapbook.firebasestorage.app",
-  messagingSenderId: "207866832146",
-  appId: "1:207866832146:web:e051d38d34c268f829ffcb",
-  measurementId: "G-GNLVZ8195E"
-};
-
-// INIT FIREBASE
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-const auth = getAuth(app);
-
-// LOGIN ADMIN
-await signInWithEmailAndPassword(
-  auth,
-  "gapas644@gmail.com",
-  "Pogiako2233"
-);
-
-const form = document.getElementById("messageForm");
-const textarea = document.getElementById("messageText");
-const list = document.getElementById("messagesList");
-const emptyState = document.getElementById("emptyState");
-const messageCount = document.getElementById("messageCount");
-const clearDraftButton = document.getElementById("clearDraftButton");
-
-// FORMAT DATE
-function formatStamp(dateValue) {
-  const date = new Date(dateValue);
-
-  return new Intl.DateTimeFormat("en-PH", {
-    dateStyle: "medium",
-    timeStyle: "short"
-  }).format(date);
-}
-
-// UPDATE COUNTER
-function updateCount(messages) {
-  const count = messages.length;
-
-  messageCount.textContent =
-    count === 1
-      ? "1 message saved"
-      : `${count} messages saved`;
-
-  emptyState.hidden = count > 0;
-}
-
-// CREATE CARD
-function createMessageCard(message, index) {
-
-  const article = document.createElement("article");
-  article.className = "saved-message";
-
-  const meta = document.createElement("div");
-  meta.className = "message-meta";
-
-  const number = document.createElement("span");
-  number.textContent =
-    `Note ${String(index + 1).padStart(2, "0")}`;
-
-  const time = document.createElement("time");
-  time.dateTime = message.createdAt;
-  time.textContent = formatStamp(message.createdAt);
-
-  const content = document.createElement("p");
-  content.textContent = message.text;
-
-  const deleteButton = document.createElement("button");
-  deleteButton.className = "delete-message";
-  deleteButton.type = "button";
-  deleteButton.textContent = "Delete";
-
-  deleteButton.addEventListener("click", async () => {
-
-    await deleteDoc(
-      doc(db, "messages", message.id)
-    );
-  });
-
-  meta.append(number, time);
-
-  article.append(
-    meta,
-    content,
-    deleteButton
-  );
-
-  return article;
-}
-
-// REALTIME LISTENER
-const q = query(
-  collection(db, "messages"),
-  orderBy("createdAt", "desc")
-);
-
-onSnapshot(q, (snapshot) => {
-
-  const messages = [];
-
-  list.innerHTML = "";
-
-  snapshot.forEach((documentData, index) => {
-
-    const data = documentData.data();
-
-    const message = {
-      id: documentData.id,
-      ...data
+    const firebaseConfig = {
+      apiKey: "AIzaSyBhpykAVLzNnN087gU_-B960jrAc_InlJs",
+      authDomain: "our-story-scrapbook.firebaseapp.com",
+      projectId: "our-story-scrapbook",
+      storageBucket: "our-story-scrapbook.firebasestorage.app",
+      messagingSenderId: "207866832146",
+      appId: "1:207866832146:web:e051d38d34c268f829ffcb",
+      measurementId: "G-GNLVZ8195E"
     };
 
-    messages.push(message);
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const auth = getAuth(app);
 
-    list.appendChild(
-      createMessageCard(message, index)
-    );
-  });
-
-  updateCount(messages);
-});
-
-// SUBMIT MESSAGE
-form.addEventListener("submit", async (event) => {
-
-  event.preventDefault();
-
-  const text = textarea.value.trim();
-
-  if (!text) {
-    textarea.focus();
-    return;
-  }
-
-  await addDoc(
-    collection(db, "messages"),
-    {
-      text,
-      createdAt: new Date().toISOString()
+    // LOGIN
+    try {
+      await signInWithEmailAndPassword(auth, "gapas644@gmail.com", "Pogiako2233");
+    } catch (e) {
+      showStatus("Could not authenticate. Some features may not work.", "error");
     }
-  );
 
-  textarea.value = "";
-  textarea.focus();
-});
+    // ELEMENTS
+    const form = document.getElementById("messageForm");
+    const textarea = document.getElementById("messageText");
+    const list = document.getElementById("messagesList");
+    const emptyState = document.getElementById("emptyState");
+    const loadingState = document.getElementById("loadingState");
+    const noResults = document.getElementById("noResults");
+    const messageCount = document.getElementById("messageCount");
+    const clearDraftBtn = document.getElementById("clearDraftButton");
+    const submitBtn = document.getElementById("submitBtn");
+    const statusBar = document.getElementById("statusBar");
+    const searchInput = document.getElementById("searchInput");
+    const sortToggle = document.getElementById("sortToggle");
+    const charCount = document.getElementById("charCount");
+    const scrollTopBtn = document.getElementById("scrollTop");
 
-// CLEAR DRAFT
-clearDraftButton.addEventListener("click", () => {
+    // STATE
+    let allMessages = [];
+    let sortDesc = true;
+    let searchQuery = "";
+    let statusTimer = null;
 
-  textarea.value = "";
-  textarea.focus();
-});
+    // CHAR COUNTER
+    textarea.addEventListener("input", () => {
+      const len = textarea.value.length;
+      charCount.textContent = len;
+      const counter = charCount.parentElement;
+      counter.classList.toggle("warn", len > 1800);
+    });
 
-</script>
-  <script src="polish.js"></script>
+    // STATUS
+    function showStatus(msg, type = "") {
+      clearTimeout(statusTimer);
+      statusBar.textContent = msg;
+      statusBar.className = "status-bar " + type;
+      if (type === "success") {
+        statusTimer = setTimeout(() => {
+          statusBar.textContent = "";
+          statusBar.className = "status-bar";
+        }, 3000);
+      }
+    }
+
+    // FORMAT DATE
+    function formatStamp(dateValue) {
+      return new Intl.DateTimeFormat("en-PH", {
+        dateStyle: "medium",
+        timeStyle: "short"
+      }).format(new Date(dateValue));
+    }
+
+    // WORD COUNT
+    function wordCount(text) {
+      return text.trim().split(/\s+/).filter(Boolean).length;
+    }
+
+    // RENDER
+    function renderMessages() {
+      list.innerHTML = "";
+      const q = searchQuery.toLowerCase();
+      const filtered = q
+        ? allMessages.filter(m => m.text.toLowerCase().includes(q))
+        : allMessages;
+
+      const sorted = [...filtered].sort((a, b) => {
+        const ta = new Date(a.createdAt), tb = new Date(b.createdAt);
+        return sortDesc ? tb - ta : ta - tb;
+      });
+
+      emptyState.hidden = allMessages.length > 0;
+      noResults.hidden = !(q && filtered.length === 0);
+      list.hidden = sorted.length === 0;
+
+      sorted.forEach((msg, idx) => {
+        list.appendChild(createCard(msg, idx));
+      });
+    }
+
+    // CREATE CARD
+    function createCard(message, index) {
+      const article = document.createElement("article");
+      article.className = "saved-message";
+      article.dataset.id = message.id;
+
+      const meta = document.createElement("div");
+      meta.className = "message-meta";
+
+      const metaLeft = document.createElement("div");
+      metaLeft.className = "meta-left";
+
+      const number = document.createElement("span");
+      number.className = "note-number";
+      number.textContent = `Note ${String(index + 1).padStart(2, "0")}`;
+
+      const time = document.createElement("time");
+      time.className = "message-time";
+      time.dateTime = message.createdAt;
+      time.textContent = formatStamp(message.createdAt);
+
+      metaLeft.append(number, time);
+      meta.appendChild(metaLeft);
+
+      const content = document.createElement("p");
+      content.className = "message-content";
+      content.textContent = message.text;
+
+      const footer = document.createElement("div");
+      footer.className = "message-footer";
+
+      const wc = document.createElement("span");
+      wc.className = "word-count";
+      const w = wordCount(message.text);
+      wc.textContent = `${w} word${w !== 1 ? "s" : ""}`;
+
+      const actions = document.createElement("div");
+      actions.className = "message-actions";
+
+      const copyBtn = document.createElement("button");
+      copyBtn.className = "action-btn copy-btn";
+      copyBtn.textContent = "Copy";
+      copyBtn.addEventListener("click", async () => {
+        try {
+          await navigator.clipboard.writeText(message.text);
+          copyBtn.textContent = "Copied ✓";
+          copyBtn.classList.add("copied");
+          setTimeout(() => {
+            copyBtn.textContent = "Copy";
+            copyBtn.classList.remove("copied");
+          }, 2000);
+        } catch {
+          copyBtn.textContent = "Failed";
+        }
+      });
+
+      const delBtn = document.createElement("button");
+      delBtn.className = "action-btn delete-btn";
+      delBtn.textContent = "Delete";
+      delBtn.addEventListener("click", async () => {
+        if (!confirm("Delete this message? This can't be undone.")) return;
+        article.style.opacity = "0.4";
+        article.style.pointerEvents = "none";
+        try {
+          await deleteDoc(doc(db, "messages", message.id));
+        } catch {
+          article.style.opacity = "";
+          article.style.pointerEvents = "";
+          showStatus("Could not delete message.", "error");
+        }
+      });
+
+      actions.append(copyBtn, delBtn);
+      footer.append(wc, actions);
+      article.append(meta, content, footer);
+      return article;
+    }
+
+    // UPDATE COUNT
+    function updateCount() {
+      const n = allMessages.length;
+      messageCount.textContent = n === 1 ? "1 message" : `${n} messages`;
+    }
+
+    // REALTIME LISTENER
+    const q = query(collection(db, "messages"), orderBy("createdAt", "desc"));
+    onSnapshot(q, (snapshot) => {
+      loadingState.hidden = true;
+      allMessages = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
+      updateCount();
+      renderMessages();
+    }, (err) => {
+      loadingState.hidden = true;
+      showStatus("Could not load messages: " + err.message, "error");
+    });
+
+    // SUBMIT
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const text = textarea.value.trim();
+      if (!text) { textarea.focus(); return; }
+
+      submitBtn.textContent = "Saving…";
+      submitBtn.classList.add("saving");
+      try {
+        await addDoc(collection(db, "messages"), {
+          text,
+          createdAt: new Date().toISOString()
+        });
+        textarea.value = "";
+        charCount.textContent = "0";
+        showStatus("Message saved ✓", "success");
+      } catch {
+        showStatus("Failed to save. Try again.", "error");
+      } finally {
+        submitBtn.innerHTML = `<svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 2l12 6-12 6V9l8-1-8-1V2z"/></svg> Save Message`;
+        submitBtn.classList.remove("saving");
+        textarea.focus();
+      }
+    });
+
+    // CLEAR DRAFT
+    clearDraftBtn.addEventListener("click", () => {
+      textarea.value = "";
+      charCount.textContent = "0";
+      textarea.focus();
+    });
+
+    // SEARCH
+    searchInput.addEventListener("input", () => {
+      searchQuery = searchInput.value;
+      renderMessages();
+    });
+
+    // SORT
+    sortToggle.addEventListener("click", () => {
+      sortDesc = !sortDesc;
+      sortToggle.textContent = sortDesc ? "↕ Newest" : "↕ Oldest";
+      renderMessages();
+    });
+
+    // SCROLL TOP
+    window.addEventListener("scroll", () => {
+      scrollTopBtn.classList.toggle("visible", window.scrollY > 300);
+    });
+    scrollTopBtn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+
+    // KEYBOARD SHORTCUT: Ctrl+Enter to submit
+    textarea.addEventListener("keydown", (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === "Enter") {
+        e.preventDefault();
+        form.requestSubmit();
+      }
+    });
+  </script>
+
 </body>
 </html>
