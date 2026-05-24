@@ -53,112 +53,184 @@
     </section>
   </main>
 
-  <script>
-    const STORAGE_KEY = "ourWebsite.messagesForYou";
-    const form = document.getElementById("messageForm");
-    const textarea = document.getElementById("messageText");
-    const list = document.getElementById("messagesList");
-    const emptyState = document.getElementById("emptyState");
-    const messageCount = document.getElementById("messageCount");
-    const clearDraftButton = document.getElementById("clearDraftButton");
+  <script type="module">
 
-    function getMessages() {
-      try {
-        return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
-      } catch {
-        return [];
-      }
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  deleteDoc,
+  doc,
+  query,
+  orderBy,
+  onSnapshot
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+import {
+  getAuth,
+  signInWithEmailAndPassword
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+// FIREBASE CONFIG
+const firebaseConfig = {
+  apiKey: "AIzaSyBhpykAVLzNnN087gU_-B960jrAc_InlJs",
+  authDomain: "our-story-scrapbook.firebaseapp.com",
+  projectId: "our-story-scrapbook",
+  storageBucket: "our-story-scrapbook.firebasestorage.app",
+  messagingSenderId: "207866832146",
+  appId: "1:207866832146:web:e051d38d34c268f829ffcb",
+  measurementId: "G-GNLVZ8195E"
+};
+
+// INIT FIREBASE
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const auth = getAuth(app);
+
+// LOGIN ADMIN
+await signInWithEmailAndPassword(
+  auth,
+  "gapas644@gmail.com",
+  "Pogiako2233"
+);
+
+const form = document.getElementById("messageForm");
+const textarea = document.getElementById("messageText");
+const list = document.getElementById("messagesList");
+const emptyState = document.getElementById("emptyState");
+const messageCount = document.getElementById("messageCount");
+const clearDraftButton = document.getElementById("clearDraftButton");
+
+// FORMAT DATE
+function formatStamp(dateValue) {
+  const date = new Date(dateValue);
+
+  return new Intl.DateTimeFormat("en-PH", {
+    dateStyle: "medium",
+    timeStyle: "short"
+  }).format(date);
+}
+
+// UPDATE COUNTER
+function updateCount(messages) {
+  const count = messages.length;
+
+  messageCount.textContent =
+    count === 1
+      ? "1 message saved"
+      : `${count} messages saved`;
+
+  emptyState.hidden = count > 0;
+}
+
+// CREATE CARD
+function createMessageCard(message, index) {
+
+  const article = document.createElement("article");
+  article.className = "saved-message";
+
+  const meta = document.createElement("div");
+  meta.className = "message-meta";
+
+  const number = document.createElement("span");
+  number.textContent =
+    `Note ${String(index + 1).padStart(2, "0")}`;
+
+  const time = document.createElement("time");
+  time.dateTime = message.createdAt;
+  time.textContent = formatStamp(message.createdAt);
+
+  const content = document.createElement("p");
+  content.textContent = message.text;
+
+  const deleteButton = document.createElement("button");
+  deleteButton.className = "delete-message";
+  deleteButton.type = "button";
+  deleteButton.textContent = "Delete";
+
+  deleteButton.addEventListener("click", async () => {
+
+    await deleteDoc(
+      doc(db, "messages", message.id)
+    );
+  });
+
+  meta.append(number, time);
+
+  article.append(
+    meta,
+    content,
+    deleteButton
+  );
+
+  return article;
+}
+
+// REALTIME LISTENER
+const q = query(
+  collection(db, "messages"),
+  orderBy("createdAt", "desc")
+);
+
+onSnapshot(q, (snapshot) => {
+
+  const messages = [];
+
+  list.innerHTML = "";
+
+  snapshot.forEach((documentData, index) => {
+
+    const data = documentData.data();
+
+    const message = {
+      id: documentData.id,
+      ...data
+    };
+
+    messages.push(message);
+
+    list.appendChild(
+      createMessageCard(message, index)
+    );
+  });
+
+  updateCount(messages);
+});
+
+// SUBMIT MESSAGE
+form.addEventListener("submit", async (event) => {
+
+  event.preventDefault();
+
+  const text = textarea.value.trim();
+
+  if (!text) {
+    textarea.focus();
+    return;
+  }
+
+  await addDoc(
+    collection(db, "messages"),
+    {
+      text,
+      createdAt: new Date().toISOString()
     }
+  );
 
-    function saveMessages(messages) {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(messages));
-    }
+  textarea.value = "";
+  textarea.focus();
+});
 
-    function formatStamp(dateValue) {
-      const date = new Date(dateValue);
-      return new Intl.DateTimeFormat("en-PH", {
-        dateStyle: "medium",
-        timeStyle: "short"
-      }).format(date);
-    }
+// CLEAR DRAFT
+clearDraftButton.addEventListener("click", () => {
 
-    function updateCount(messages) {
-      const count = messages.length;
-      messageCount.textContent = count === 1 ? "1 message saved" : `${count} messages saved`;
-      emptyState.hidden = count > 0;
-    }
+  textarea.value = "";
+  textarea.focus();
+});
 
-    function createMessageCard(message, index) {
-      const article = document.createElement("article");
-      article.className = "saved-message";
-
-      const meta = document.createElement("div");
-      meta.className = "message-meta";
-
-      const number = document.createElement("span");
-      number.textContent = `Note ${String(index + 1).padStart(2, "0")}`;
-
-      const time = document.createElement("time");
-      time.dateTime = message.createdAt;
-      time.textContent = formatStamp(message.createdAt);
-
-      const content = document.createElement("p");
-      content.textContent = message.text;
-
-      const deleteButton = document.createElement("button");
-      deleteButton.className = "delete-message";
-      deleteButton.type = "button";
-      deleteButton.textContent = "Delete";
-      deleteButton.setAttribute("aria-label", `Delete message from ${time.textContent}`);
-      deleteButton.addEventListener("click", () => {
-        const messages = getMessages().filter((item) => item.id !== message.id);
-        saveMessages(messages);
-        renderMessages();
-      });
-
-      meta.append(number, time);
-      article.append(meta, content, deleteButton);
-      return article;
-    }
-
-    function renderMessages() {
-      const messages = getMessages().sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-      list.innerHTML = "";
-      messages.forEach((message, index) => {
-        list.appendChild(createMessageCard(message, index));
-      });
-      updateCount(messages);
-    }
-
-    form.addEventListener("submit", (event) => {
-      event.preventDefault();
-      const text = textarea.value.trim();
-
-      if (!text) {
-        textarea.focus();
-        return;
-      }
-
-      const messages = getMessages();
-      messages.push({
-        id: `${Date.now()}-${crypto.getRandomValues(new Uint32Array(1))[0]}`,
-        text,
-        createdAt: new Date().toISOString()
-      });
-
-      saveMessages(messages);
-      textarea.value = "";
-      renderMessages();
-      textarea.focus();
-    });
-
-    clearDraftButton.addEventListener("click", () => {
-      textarea.value = "";
-      textarea.focus();
-    });
-
-    renderMessages();
-  </script>
+</script>
   <script src="polish.js"></script>
 </body>
 </html>
