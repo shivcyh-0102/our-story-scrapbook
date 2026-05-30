@@ -2,6 +2,7 @@ window.addEventListener("DOMContentLoaded", () => {
   document.body.classList.add("page-ready");
 
   const currentPage = window.location.pathname.split("/").pop().toLowerCase() || "index.html";
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   document.querySelectorAll(".navbar a").forEach((link) => {
     const linkPage = link.getAttribute("href")?.split("#")[0].toLowerCase();
@@ -18,8 +19,14 @@ window.addEventListener("DOMContentLoaded", () => {
       }
 
       const nextUrl = new URL(href, window.location.href);
+      const samePage = nextUrl.pathname === window.location.pathname;
 
-      if (nextUrl.origin !== window.location.origin || nextUrl.pathname === window.location.pathname && nextUrl.hash) {
+      if (
+        nextUrl.origin !== window.location.origin ||
+        (samePage && nextUrl.hash) ||
+        (samePage && !nextUrl.hash) ||
+        prefersReducedMotion
+      ) {
         return;
       }
 

@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="A personal memory archive with photos, music, messages, and a paused relationship timeline." />
+  <meta name="theme-color" content="#fff1f4" />
   <title>Our Love Story</title>
   <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;500&display=swap" rel="stylesheet">
   <style>
@@ -233,12 +235,12 @@
 
   <div class="music-player">
     <div class="album-wrapper">
-      <img src="peakpx.jpg" alt="Album Cover" class="album-art spinning" />
+      <img src="peakpx.jpg" alt="Album Cover" class="album-art spinning" decoding="async" />
       <div class="music-notes">
         <span>🎵</span><br><span>🎶</span><br><span>🎼</span>
       </div>
     </div>
-    <audio controls loop>
+    <audio controls loop preload="metadata">
       <source src="about you.mp3" type="audio/mpeg">
       Your browser does not support the audio element.
     </audio>
@@ -255,7 +257,7 @@
     <h2>About Us</h2>
     <div class="about-card">
       <figure class="about-photo-frame">
-        <img src="kami.jpg" alt="Us Together" class="our-photo" />
+        <img src="kami.jpg" alt="Us Together" class="our-photo" loading="lazy" decoding="async" />
       </figure>
 
       <div class="about-copy">
