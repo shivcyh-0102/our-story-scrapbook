@@ -1520,7 +1520,7 @@ footer {
     width: auto;
     transform: none;
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
     gap: 0.45rem;
     overflow-x: auto;
     padding: 0.7rem !important;
