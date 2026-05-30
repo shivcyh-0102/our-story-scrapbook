@@ -273,20 +273,51 @@ li,
 
 .home-hero {
   position: relative;
-  width: min(100%, 820px);
+  width: min(100%, 980px);
+  min-height: clamp(340px, 48vh, 520px);
+  display: grid;
+  place-items: center;
   margin-left: auto !important;
   margin-right: auto !important;
   overflow: hidden;
   text-align: center;
   background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.92), rgba(255, 244, 241, 0.74)),
+    linear-gradient(135deg, rgba(255, 250, 246, 0.88), rgba(255, 226, 233, 0.72)),
     radial-gradient(circle at 18% 12%, rgba(247, 176, 141, 0.3), transparent 16rem),
     radial-gradient(circle at 88% 10%, rgba(184, 50, 95, 0.18), transparent 14rem) !important;
+}
+
+.home-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(rgba(255, 244, 248, 0.28), rgba(255, 244, 248, 0.28)),
+    url("mari.png") center 38% / cover no-repeat;
+  opacity: 1;
+  filter: saturate(1.1) contrast(1.04);
+  transform: scale(1.03);
+}
+
+.home-hero::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  height: 42%;
+  background: linear-gradient(transparent, rgba(255, 250, 246, 0.78));
+  pointer-events: none;
+}
+
+.home-hero > * {
+  position: relative;
+  z-index: 1;
 }
 
 .home-hero h1 {
   margin: 0.2rem 0 0.7rem !important;
   font-size: clamp(2.55rem, 8vw, 4.75rem) !important;
+  color: #fff !important;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
 }
 
 .home-hero p {
@@ -1240,8 +1271,9 @@ li,
   border: 1px solid rgba(255, 255, 255, 0.72) !important;
   border-radius: 34px !important;
   background:
-    linear-gradient(145deg, rgba(255, 255, 255, 0.9), rgba(255, 244, 241, 0.72)),
-    radial-gradient(circle at top left, rgba(255, 255, 255, 0.95), transparent 15rem) !important;
+    linear-gradient(145deg, rgba(255, 250, 246, 0.96), rgba(255, 226, 233, 0.78)),
+    radial-gradient(circle at 22% 20%, rgba(247, 176, 141, 0.28), transparent 18rem),
+    radial-gradient(circle at 80% 70%, rgba(184, 50, 95, 0.12), transparent 16rem) !important;
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.92),
     0 24px 64px rgba(80, 38, 54, 0.2) !important;
