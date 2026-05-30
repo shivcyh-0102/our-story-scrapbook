@@ -233,25 +233,27 @@
     <a href="#navigate" class="button">Navigate</a>
   </div>
 
-  <div class="music-player">
-    <div class="album-wrapper">
-      <img src="peakpx.jpg" alt="Album Cover" class="album-art spinning" decoding="async" />
-      <div class="music-notes">
-        <span>🎵</span><br><span>🎶</span><br><span>🎼</span>
-      </div>
-    </div>
-    <audio controls loop preload="metadata">
-      <source src="about you.mp3" type="audio/mpeg">
-      Your browser does not support the audio element.
-    </audio>
-    <p class="song-title">🎧 Now Playing: <span>About You</span></p>
-  </div>
-
-  <header>
+  <header class="home-hero">
     <div class="memory-stamp">December 20, 2023 - April 14, 2026</div>
     <h1>This is Our Story</h1>
     <p>A digital scrapbook for the memories that still mattered.</p>
   </header> 
+
+  <section class="home-player" aria-label="Featured song">
+    <div class="music-player">
+      <div class="album-wrapper">
+        <img src="peakpx.jpg" alt="Album Cover" class="album-art spinning" decoding="async" />
+        <div class="music-notes">
+          <span>🎵</span><br><span>🎶</span><br><span>🎼</span>
+        </div>
+      </div>
+      <audio controls loop preload="metadata">
+        <source src="about you.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+      </audio>
+      <p class="song-title">🎧 Now Playing: <span>About You</span></p>
+    </div>
+  </section>
 
   <section id="about">
     <h2>About Us</h2>
@@ -279,6 +281,24 @@
         </p>
       </div>
     </div>
+    <div class="mini-timeline" aria-label="Story timeline">
+      <article>
+        <span>Grade 4</span>
+        <p>The first quiet moment where the story started from afar.</p>
+      </article>
+      <article>
+        <span>Grade 10</span>
+        <p>The walks, talks, and small choices that brought everything closer.</p>
+      </article>
+      <article>
+        <span>December 20, 2023</span>
+        <p>The day the relationship officially began.</p>
+      </article>
+      <article>
+        <span>April 14, 2026</span>
+        <p>The day the relationship ended, while the memories stayed.</p>
+      </article>
+    </div>
     <h2 id="important-dates">Important Dates</h2>
     <ul>
       <li><strong>December 20, 2023:</strong> The day you said Yes! ⸜(｡˃ ᵕ ˂ )⸝♡</li>
@@ -305,6 +325,12 @@
       <a href="messages.html" class="button">💌 Messages for You</a>
     </div>
   </section>
+
+  <footer class="site-footer">
+    <strong>Memory Archive</strong>
+    <span>Made by JM</span>
+    <span>2023 - 2026</span>
+  </footer>
 
   <script>
     function calculateDuration() {
