@@ -316,7 +316,7 @@ li,
 .home-hero h1 {
   margin: 0.2rem 0 0.7rem !important;
   font-size: clamp(2.55rem, 8vw, 4.75rem) !important;
-  color: #fff !important;
+  color: #fef0ea !important;
   text-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
 }
 
