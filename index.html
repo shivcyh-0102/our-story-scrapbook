@@ -1,349 +1,489 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="A personal memory archive with photos, music, messages, and a paused relationship timeline." />
-  <meta name="theme-color" content="#fff1f4" />
-  <title>Our Love Story</title>
-  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;500&display=swap" rel="stylesheet">
-  <style>
-    html {
-      scroll-behavior: smooth;
-    }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="A personal memory archive with photos, music, messages, and a paused relationship timeline." />
+<meta name="theme-color" content="#FBF6F3" />
+<title>Our Love Story</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ivory:#FBF6F3;
+    --ivory-deep:#F5EDE8;
+    --ink:#3A2E2E;
+    --ink-soft:#6E5D5D;
+    --rose:#B8768A;
+    --rose-deep:#9C5A6E;
+    --blush:#EFE0E2;
+    --gold:#C9A876;
+    --line: rgba(58,46,46,0.12);
+    --shadow: 0 1px 2px rgba(58,46,46,0.04), 0 8px 24px rgba(58,46,46,0.06);
+  }
 
-    body {
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(to right, #fefefe, #f0e5ff);
-      padding: 2rem;
-      max-width: 800px;
-      margin: auto;
-      color: #333;
-      line-height: 1.7;
-      padding-top: 100px;
-    }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
 
-    header {
-      text-align: center;
-      margin-bottom: 2rem;
-    }
+  body{
+    margin:0;
+    font-family:'Inter', sans-serif;
+    background:var(--ivory);
+    color:var(--ink);
+    line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+  }
 
-    h1 {
-      font-size: 2.5rem;
-      margin: 0;
-      color: #cc3366;
-      font-family: 'Pacifico', cursive;
-    }
+  a{color:inherit;}
 
-    h2 {
-      font-size: 1.6rem;
-      margin-top: 2.5rem;
-      border-bottom: 2px solid #eee;
-      padding-bottom: 0.5rem;
-      color: #444;
-    }
+  /* ---------- Nav ---------- */
+  .navbar{
+    position:fixed;
+    top:0; left:0; right:0;
+    z-index:1000;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:0.4rem;
+    flex-wrap:wrap;
+    padding:1.1rem 1.5rem;
+    background:rgba(251,246,243,0.82);
+    backdrop-filter: blur(10px) saturate(140%);
+    -webkit-backdrop-filter: blur(10px) saturate(140%);
+    border-bottom:1px solid var(--line);
+  }
 
-    .navbar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      background-color: rgba(255, 255, 255, 0.9);
-      padding: 1rem;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-      z-index: 1000;
-      text-align: center;
-    }
+  .navbar a{
+    font-size:0.78rem;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    font-weight:500;
+    color:var(--ink-soft);
+    text-decoration:none;
+    padding:0.5rem 1rem;
+    border-radius:999px;
+    transition: color .25s ease, background .25s ease;
+  }
 
-    .navbar a {
-      margin: 0 1rem;
-      color: #cc3366;
-      font-weight: bold;
-      text-decoration: none;
-      padding: 0.6rem 1.2rem;
-      border-radius: 50px;
-      transition: background 0.3s, color 0.3s;
-      display: inline-block;
-    }
+  .navbar a:hover{
+    color:var(--rose-deep);
+    background:var(--blush);
+  }
 
-    .navbar a:hover {
-      background: #cc3366;
-      color: white;
-    }
+  /* ---------- Layout shell ---------- */
+  .page{
+    max-width:760px;
+    margin:0 auto;
+    padding:9.5rem 1.5rem 5rem;
+  }
 
-    a.button {
-      display: inline-block;
-      margin: 0.5rem 0;
-      color: #0077cc;
-      text-decoration: none;
-      font-weight: bold;
-      padding: 0.6rem 1.2rem;
-      border: 2px solid #0077cc;
-      border-radius: 50px;
-      transition: background 0.3s, color 0.3s;
-    }
+  /* ---------- Hero ---------- */
+  header.home-hero{
+    text-align:center;
+    margin-bottom:4rem;
+  }
 
-    a.button:hover {
-      background: #0077cc;
-      color: white;
-    }
+  .memory-stamp{
+    display:inline-block;
+    font-size:0.72rem;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    color:var(--gold);
+    font-weight:600;
+    margin-bottom:1.1rem;
+  }
 
-    footer {
-      text-align: center;
-      margin-top: 3rem;
-      color: #aaa;
-      font-size: 0.9rem;
-    }
+  .memory-stamp::before,
+  .memory-stamp::after{
+    content:"";
+    display:inline-block;
+    width:24px;
+    height:1px;
+    background:var(--gold);
+    vertical-align:middle;
+    margin:0 0.6em;
+    opacity:.6;
+  }
 
-    .about-text {
-      white-space: pre-wrap;
-      margin-top: 1rem;
-      text-align: justify;
-      background-color: #fafafa;
-      padding: 1rem;
-      border-left: 4px solid #cc3366;
-      border-radius: 5px;
-      position: relative;
-      z-index: 1;
-    }
+  h1{
+    font-family:'Cormorant Garamond', serif;
+    font-weight:500;
+    font-style:italic;
+    font-size:clamp(2.6rem, 6vw, 3.8rem);
+    line-height:1.1;
+    margin:0 0 0.9rem;
+    color:var(--ink);
+  }
 
-    ul {
-      list-style: none;
-      padding-left: 0;
-    }
+  header.home-hero > p{
+    font-size:1rem;
+    font-weight:300;
+    color:var(--ink-soft);
+    max-width:38ch;
+    margin:0 auto;
+  }
 
-    ul li::before {
-      content: "💖 ";
-    }
+  h2{
+    font-family:'Cormorant Garamond', serif;
+    font-style:italic;
+    font-weight:500;
+    font-size:1.9rem;
+    color:var(--ink);
+    margin:0 0 1.6rem;
+    padding-bottom:0.9rem;
+    border-bottom:1px solid var(--line);
+  }
 
-    .our-photo {
-      width: 90%;
-      max-width: 400px;
-      display: block;
-      margin: 1.5rem auto;
-      border-radius: 15px;
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-      border: 4px dashed #ffc0cb;
-      background: url('https://pngimg.com/uploads/hello_kitty/hello_kitty_PNG47.png') no-repeat bottom right;
-      background-size: 60px;
-      padding: 10px;
-      background-color: #fff0f5;
-      position: relative;
-      z-index: 1;
-    }
+  section{ margin-bottom:4.5rem; }
 
-    #counter {
-      font-size: 1.2rem;
-      margin-top: 1rem;
-      text-align: center;
-      color: #cc3366;
-      font-weight: bold;
-    }
+  /* ---------- Music player ---------- */
+  .music-player{
+    text-align:center;
+    background:var(--ivory-deep);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:2.2rem 1.5rem;
+    box-shadow:var(--shadow);
+  }
 
-    .music-player {
-      text-align: center;
-      margin-bottom: 2.5rem;
-      background: linear-gradient(135deg, #ffcccb, #ff69b4);
-      border-radius: 10px;
-      padding: 1.5rem;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-      border: 4px solid #ff69b4;
-      position: relative;
-      overflow: hidden;
-    }
+  .album-wrapper{
+    position:relative;
+    display:inline-block;
+  }
 
-    .album-wrapper {
-      position: relative;
-      display: inline-block;
-    }
+  .album-art{
+    width:150px;
+    height:150px;
+    border-radius:50%;
+    object-fit:cover;
+    box-shadow:0 6px 20px rgba(58,46,46,0.18);
+    border:6px solid var(--ivory);
+  }
 
-    .album-art {
-      width: 180px;
-      height: 180px;
-      border-radius: 50%;
-      object-fit: cover;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-      border: 6px solid #ffc0cb;
-      transition: transform 0.3s ease;
-    }
+  .spinning{ animation: spin 12s linear infinite; }
 
-    .album-art:hover {
-      transform: scale(1.05);
-    }
+  @keyframes spin{
+    from{ transform:rotate(0deg); }
+    to{ transform:rotate(360deg); }
+  }
 
-    .spinning {
-      animation: spin 10s linear infinite;
-    }
+  .music-notes{
+    position:absolute;
+    top:-6px;
+    right:-18px;
+    font-size:1.15rem;
+    color:var(--rose);
+    animation: floatNotes 2.4s infinite ease-in-out alternate;
+  }
 
-    @keyframes spin {
-      from { transform: rotate(0deg); }
-      to   { transform: rotate(360deg); }
-    }
+  @keyframes floatNotes{
+    from{ transform:translateY(0); opacity:.9; }
+    to{ transform:translateY(-8px); opacity:.5; }
+  }
 
-    .music-notes {
-      position: absolute;
-      top: -10px;
-      right: -20px;
-      font-size: 1.5rem;
-      animation: floatNotes 2s infinite ease-in-out alternate;
-    }
+  .song-title{
+    font-family:'Cormorant Garamond', serif;
+    font-style:italic;
+    font-size:1.15rem;
+    color:var(--rose-deep);
+    margin-top:1rem;
+  }
 
-    @keyframes floatNotes {
-      from { transform: translateY(0); opacity: 1; }
-      to   { transform: translateY(-10px); opacity: 0.7; }
-    }
+  audio{
+    margin-top:1rem;
+    width:90%;
+    max-width:280px;
+    border-radius:999px;
+  }
 
-    .song-title {
-      font-size: 0.95rem;
-      color: #cc3366;
-      font-weight: bold;
-      margin-top: 0.6rem;
-    }
+  /* ---------- About ---------- */
+  .about-card{
+    display:grid;
+    grid-template-columns:220px 1fr;
+    gap:2.2rem;
+    align-items:start;
+  }
 
-    audio {
-      margin-top: 1rem;
-      width: 90%;
-      max-width: 300px;
-      border-radius: 5px;
-      border: 2px solid #cc3366;
-      background: #f9f9f9;
-      padding: 5px;
-      outline: none;
-    }
+  .about-photo-frame{ margin:0; }
 
-    audio::-webkit-media-controls-panel {
-      background-color: #ffcccb;
-    }
+  .our-photo{
+    width:100%;
+    display:block;
+    border-radius:6px;
+    box-shadow:var(--shadow);
+  }
 
-    audio::-webkit-media-controls-play-button {
-      background-color: #cc3366;
-      border-radius: 50%;
-    }
+  .about-kicker{
+    font-family:'Cormorant Garamond', serif;
+    font-style:italic;
+    font-size:1.25rem;
+    color:var(--rose-deep);
+    margin:0 0 1rem;
+  }
 
-    audio::-webkit-media-controls-volume-slider {
-      background-color: #ff69b4;
-    }
-  </style>
-  <link rel="stylesheet" href="polish.css">
+  .about-copy p{
+    margin:0 0 1.1rem;
+    font-size:0.98rem;
+    color:var(--ink);
+  }
+
+  .about-copy p:last-child{ margin-bottom:0; }
+
+  /* ---------- Mini timeline ---------- */
+  .mini-timeline{
+    margin-top:2.8rem;
+    display:grid;
+    gap:0;
+    border-top:1px solid var(--line);
+  }
+
+  .mini-timeline article{
+    display:grid;
+    grid-template-columns:160px 1fr;
+    gap:1.5rem;
+    padding:1.3rem 0;
+    border-bottom:1px solid var(--line);
+  }
+
+  .mini-timeline span{
+    font-family:'Cormorant Garamond', serif;
+    font-style:italic;
+    font-weight:600;
+    font-size:1.05rem;
+    color:var(--rose-deep);
+  }
+
+  .mini-timeline p{
+    margin:0;
+    font-size:0.92rem;
+    color:var(--ink-soft);
+  }
+
+  /* ---------- Important dates ---------- */
+  ul{
+    list-style:none;
+    padding:0;
+    margin:0;
+    border-top:1px solid var(--line);
+  }
+
+  ul li{
+    padding:0.9rem 0;
+    border-bottom:1px solid var(--line);
+    font-size:0.95rem;
+    color:var(--ink);
+  }
+
+  ul li strong{
+    font-family:'Cormorant Garamond', serif;
+    font-style:italic;
+    font-weight:600;
+    color:var(--rose-deep);
+    margin-right:0.4em;
+  }
+
+  #counter{
+    margin-top:2rem;
+    text-align:center;
+    background:var(--blush);
+    border-radius:10px;
+    padding:1.8rem 1.2rem;
+  }
+
+  .counter-label{
+    display:block;
+    font-size:0.7rem;
+    letter-spacing:0.16em;
+    text-transform:uppercase;
+    color:var(--rose-deep);
+    font-weight:600;
+    margin-bottom:0.5rem;
+  }
+
+  #counter strong{
+    display:block;
+    font-family:'Cormorant Garamond', serif;
+    font-style:italic;
+    font-size:2rem;
+    color:var(--ink);
+    font-weight:500;
+  }
+
+  .counter-dates{
+    display:block;
+    margin-top:0.4rem;
+    font-size:0.8rem;
+    color:var(--ink-soft);
+  }
+
+  /* ---------- Navigate ---------- */
+  .navigate-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
+    gap:1rem;
+  }
+
+  .navigate-grid a{
+    display:block;
+    text-align:center;
+    text-decoration:none;
+    font-size:0.92rem;
+    font-weight:500;
+    color:var(--ink);
+    background:var(--ivory-deep);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:1.3rem 1rem;
+    transition: border-color .25s ease, color .25s ease, transform .25s ease;
+  }
+
+  .navigate-grid a:hover{
+    border-color:var(--rose);
+    color:var(--rose-deep);
+    transform:translateY(-2px);
+  }
+
+  /* ---------- Footer ---------- */
+  footer.site-footer{
+    text-align:center;
+    padding-top:1rem;
+    color:var(--ink-soft);
+    font-size:0.8rem;
+    font-weight:300;
+    letter-spacing:0.02em;
+  }
+
+  @media (max-width: 640px){
+    .page{ padding-top:8.5rem; }
+    .about-card{ grid-template-columns:1fr; }
+    .mini-timeline article{ grid-template-columns:1fr; gap:0.3rem; }
+  }
+
+  :focus-visible{
+    outline:2px solid var(--rose);
+    outline-offset:3px;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation:none !important; transition:none !important; }
+  }
+</style>
+<link rel="stylesheet" href="polish.cs">
 </head>
 <body>
+
   <div class="navbar">
-    <a href="#about" class="button">About Us</a>
-    <a href="#important-dates" class="button">Important Dates</a>
-    <a href="#navigate" class="button">Navigate</a>
+    <a href="#about">About Us</a>
+    <a href="#important-dates">Important Dates</a>
+    <a href="#navigate">Navigate</a>
   </div>
 
-  <header class="home-hero">
-    <div class="memory-stamp">December 20, 2023 - April 14, 2026</div>
-    <h1>This is Our Story</h1>
-    <p>A digital scrapbook for the memories that still mattered.</p>
-  </header> 
+  <div class="page">
 
-  <section class="home-player" aria-label="Featured song">
-    <div class="music-player">
-      <div class="album-wrapper">
-        <img src="peakpx.jpg" alt="Album Cover" class="album-art spinning" decoding="async" />
-        <div class="music-notes">
-          <span>🎵</span><br><span>🎶</span><br><span>🎼</span>
+    <header class="home-hero">
+      <div class="memory-stamp">December 20, 2023 &ndash; April 14, 2026</div>
+      <h1>This is Our Story</h1>
+      <p>A digital scrapbook for the memories that still mattered.</p>
+    </header>
+
+    <section class="home-player" aria-label="Featured song">
+      <div class="music-player">
+        <div class="album-wrapper">
+          <img src="peakpx.jpg" alt="Album Cover" class="album-art spinning" decoding="async" />
+          <div class="music-notes">
+            <span>&#9834;</span>
+          </div>
+        </div>
+        <audio controls loop preload="metadata">
+          <source src="about you.mp3" type="audio/mpeg">
+          Your browser does not support the audio element.
+        </audio>
+        <p class="song-title">Now Playing &mdash; About You</p>
+      </div>
+    </section>
+
+    <section id="about">
+      <h2>About Us</h2>
+      <div class="about-card">
+        <figure class="about-photo-frame">
+          <img src="kami.jpg" alt="Us Together" class="our-photo" loading="lazy" decoding="async" />
+        </figure>
+
+        <div class="about-copy">
+          <p class="about-kicker">A story that started quietly and became unforgettable.</p>
+          <p>Our story began unexpectedly way back in Grade 4. I still remember the first time I saw her, sitting in front of the class, writing on the board from her seat. In that quiet moment, something about her caught my attention. I wanted to talk to her, but I was too shy, so I admired her from a distance.</p>
+          <p>By Grade 6, we started walking home at the same time because one of my close friends was also friends with her. It was never planned, but we often ended up walking together. After elementary, we went our separate ways, and the feelings faded for a while.</p>
+          <p>High school came, then the pandemic. By chance, we became classmates again in Grade 7 and 8, though she did not remember me at first. Later on, we started talking more. She would message me, joke around, tell stories, and ask if we could walk home together.</p>
+          <p>One day, I finally said yes. We went to school together, and in that simple moment, something beautiful began. Grade 10 came, we spent more time together, and I slowly realized I was already falling for her.</p>
+          <p>On December 20, 2023, she said yes. From a quiet seat back in Grade 4 to the bond we built, ours was a story we never saw coming, but one that will always hold a real place in memory.</p>
         </div>
       </div>
-      <audio controls loop preload="metadata">
-        <source src="about you.mp3" type="audio/mpeg">
-        Your browser does not support the audio element.
-      </audio>
-      <p class="song-title">🎧 Now Playing: <span>About You</span></p>
-    </div>
-  </section>
 
-  <section id="about">
-    <h2>About Us</h2>
-    <div class="about-card">
-      <figure class="about-photo-frame">
-        <img src="kami.jpg" alt="Us Together" class="our-photo" loading="lazy" decoding="async" />
-      </figure>
-
-      <div class="about-copy">
-        <p class="about-kicker">A story that started quietly and became unforgettable.</p>
-        <p>
-          Our story began unexpectedly way back in Grade 4. I still remember the first time I saw her, sitting in front of the class, writing on the board from her seat. In that quiet moment, something about her caught my attention. I wanted to talk to her, but I was too shy, so I admired her from a distance.
-        </p>
-        <p>
-          By Grade 6, we started walking home at the same time because one of my close friends was also friends with her. It was never planned, but we often ended up walking together. After elementary, we went our separate ways, and the feelings faded for a while.
-        </p>
-        <p>
-          High school came, then the pandemic. By chance, we became classmates again in Grade 7 and 8, though she did not remember me at first. Later on, we started talking more. She would message me, joke around, tell stories, and ask if we could walk home together.
-        </p>
-        <p>
-          One day, I finally said yes. We went to school together, and in that simple moment, something beautiful began. Grade 10 came, we spent more time together, and I slowly realized I was already falling for her.
-        </p>
-        <p>
-          On December 20, 2023, she said yes. From a quiet seat back in Grade 4 to the bond we built, ours was a story we never saw coming, but one that will always hold a real place in memory.
-        </p>
+      <div class="mini-timeline" aria-label="Story timeline">
+        <article>
+          <span>Grade 4</span>
+          <p>The first quiet moment where the story started from afar.</p>
+        </article>
+        <article>
+          <span>Grade 10</span>
+          <p>The walks, talks, and small choices that brought everything closer.</p>
+        </article>
+        <article>
+          <span>December 20, 2023</span>
+          <p>The day the relationship officially began.</p>
+        </article>
+        <article>
+          <span>April 14, 2026</span>
+          <p>The day the relationship ended, while the memories stayed.</p>
+        </article>
       </div>
-    </div>
-    <div class="mini-timeline" aria-label="Story timeline">
-      <article>
-        <span>Grade 4</span>
-        <p>The first quiet moment where the story started from afar.</p>
-      </article>
-      <article>
-        <span>Grade 10</span>
-        <p>The walks, talks, and small choices that brought everything closer.</p>
-      </article>
-      <article>
-        <span>December 20, 2023</span>
-        <p>The day the relationship officially began.</p>
-      </article>
-      <article>
-        <span>April 14, 2026</span>
-        <p>The day the relationship ended, while the memories stayed.</p>
-      </article>
-    </div>
-    <h2 id="important-dates">Important Dates</h2>
-    <ul>
-      <li><strong>December 20, 2023:</strong> The day you said Yes! ⸜(｡˃ ᵕ ˂ )⸝♡</li>
-      <li><Strong>December 25, 2023:</Strong> Our first Christmas together! 🎄</li>
-      <li><strong>January 1, 2024:</strong> The day you turn 16, we're now together! </li>
-      <li><strong>January 10, 2024:</strong> Our first kiss! 💋 </li>
-      <li><strong>December 20, 2024:</strong> Our first anniversary!</li>
-      <li><strong>January 1, 2025:</strong> The day you turn 17, we're still together! (˶˃ ᵕ ˂˶) .ᐟ.ᐟ </li>
-      <li><strong>December 20, 2025:</strong> Our second anniversary!</li>
-      <li><strong>January 1, 2026:</strong> The day you turn 18, your last birthday with me. </li>
-      <li><strong>April 14, 2026:</strong> The day our relationship ended, but the memories stayed.</li>
-      
-    </ul>
-    <div id="counter" class="memory-counter"></div>
-  </section>
 
-  <section id="navigate">
-    <h2>Navigate</h2>
-    <div class="navigate-grid">
-      <a href="gallery.html" class="button">📸 Our Photo Gallery</a>
-      <a href="playlist.html" class="button">🎵 Our Playlist</a>
-      <a href="howlong.html" class="button">🕔 How Long We've Been Together</a>
-      <a href="allaboutyou.html" class="button">💖 All About You</a>
-    </div>
-  </section>
+      <h2 id="important-dates">Important Dates</h2>
+      <ul>
+        <li><strong>December 20, 2023</strong>The day you said yes.</li>
+        <li><strong>December 25, 2023</strong>Our first Christmas together.</li>
+        <li><strong>January 1, 2024</strong>The day you turned 16, we're now together.</li>
+        <li><strong>January 10, 2024</strong>Our first kiss.</li>
+        <li><strong>December 20, 2024</strong>Our first anniversary.</li>
+        <li><strong>January 1, 2025</strong>The day you turned 17, we're still together.</li>
+        <li><strong>December 20, 2025</strong>Our second anniversary.</li>
+        <li><strong>January 1, 2026</strong>The day you turned 18, your last birthday with me.</li>
+        <li><strong>April 14, 2026</strong>The day our relationship ended, but the memories stayed.</li>
+      </ul>
 
-  <footer class="site-footer">
-    <strong>Our Memory Archive</strong>
-  </footer>
+      <div id="counter" class="memory-counter"></div>
+    </section>
+
+    <section id="navigate">
+      <h2>Navigate</h2>
+      <div class="navigate-grid">
+        <a href="gallery.html">Our Photo Gallery</a>
+        <a href="playlist.html">Our Playlist</a>
+        <a href="howlong.html">How Long We've Been Together</a>
+        <a href="allaboutyou.html">All About You</a>
+      </div>
+    </section>
+
+    <footer class="site-footer">
+      <strong>i love you, ganda ♡</strong>
+    </footer>
+
+  </div>
 
   <script>
     function calculateDuration() {
-      const startDate = new Date('2023-12-20'); 
-      const endDate = new Date('2026-04-14'); 
+      const startDate = new Date('2023-12-20');
+      const endDate = new Date('2026-04-14');
       const timeDiff = endDate - startDate;
       const daysDiff = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
       document.getElementById('counter').innerHTML = `
         <span class="counter-label">Time Together</span>
         <strong>${daysDiff} days</strong>
-        <span class="counter-dates">December 20, 2023 - April 14, 2026</span>
+        <span class="counter-dates">December 20, 2023 &ndash; April 14, 2026</span>
       `;
     }
-
     calculateDuration();
-
   </script>
   <script src="polish.js"></script>
 

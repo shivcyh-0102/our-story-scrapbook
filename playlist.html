@@ -1,253 +1,305 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="A personal playlist page for songs connected to memories and moments." />
-  <meta name="theme-color" content="#fff1f4" />
-  <title>Our Playlist</title>
-  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;500&display=swap" rel="stylesheet">
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="A personal playlist page for songs connected to memories and moments." />
+<meta name="theme-color" content="#FBF6F3" />
+<title>Our Playlist</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ivory:#FBF6F3;
+    --ivory-deep:#F5EDE8;
+    --ink:#3A2E2E;
+    --ink-soft:#6E5D5D;
+    --rose:#B8768A;
+    --rose-deep:#9C5A6E;
+    --blush:#EFE0E2;
+    --gold:#C9A876;
+    --line: rgba(58,46,46,0.12);
+    --shadow: 0 1px 2px rgba(58,46,46,0.04), 0 8px 24px rgba(58,46,46,0.06);
+  }
 
-    html {
-      scroll-behavior: smooth; 
-    }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
 
-    body {
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg, #fce4ec, #f8bbd0, #fce4ec);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      margin: 0;
-      padding: 2rem;
-      color: #cc3366;
-      text-align: center;
-    }
+  body{
+    margin:0;
+    font-family:'Inter', sans-serif;
+    background:var(--ivory);
+    color:var(--ink);
+    line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+  }
 
-    .navbar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      background-color: rgba(255, 255, 255, 0.9);
-      padding: 1rem;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-      z-index: 1000;
-      text-align: center;
-    }
+  a{color:inherit;}
 
-    .navbar a {
-      margin: 0 1rem;
-      color: #cc3366;
-      font-weight: bold;
-      text-decoration: none;
-    }
+  /* ---------- Nav ---------- */
+  .navbar{
+    position:fixed;
+    top:0; left:0; right:0;
+    z-index:1000;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:1.1rem 1.5rem;
+    background:rgba(251,246,243,0.82);
+    backdrop-filter: blur(10px) saturate(140%);
+    -webkit-backdrop-filter: blur(10px) saturate(140%);
+    border-bottom:1px solid var(--line);
+  }
 
-    .navbar a:hover {
-      color: #ff4081;
-    }
+  .navbar a{
+    font-size:0.78rem;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    font-weight:500;
+    color:var(--ink-soft);
+    text-decoration:none;
+    padding:0.5rem 1rem;
+    border-radius:999px;
+    transition: color .25s ease, background .25s ease;
+  }
 
-    h1 {
-      font-family: 'Pacifico', cursive;
-      font-size: 3rem;
-      margin-bottom: 1.5rem;
-      color: #ff4081;
-      text-shadow: 1px 1px 3px #ffc1d9;
-      margin-top: 80px; 
-    }
+  .navbar a:hover{
+    color:var(--rose-deep);
+    background:var(--blush);
+  }
 
-    .hello-kitty {
-      width: 100px; 
-      position: absolute;
-      top: 20px; 
-      right: 20px; 
-      z-index: 10; 
-    }
+  /* ---------- Hero ---------- */
+  header.playlist-hero{
+    max-width:640px;
+    margin:0 auto;
+    padding:9.5rem 1.5rem 3.5rem;
+    text-align:center;
+  }
 
-    .song {
-      background: rgba(255, 240, 245, 0.8);
-      padding: 1rem;
-      border-radius: 10px;
-      margin: 1rem 0;
-      box-shadow: 0 4px 12px rgba(204, 51, 102, 0.2);
-      width: 90%;
-      max-width: 400px;
-      position: relative; 
-    }
+  .memory-stamp{
+    display:inline-block;
+    font-size:0.72rem;
+    letter-spacing:0.2em;
+    text-transform:uppercase;
+    color:var(--gold);
+    font-weight:600;
+    margin-bottom:1.1rem;
+  }
 
-    .music-player {
-      text-align: center;
-      margin-bottom: 2.5rem;
-      background: linear-gradient(135deg, #ffcccb, #ffb3c1);
-      border-radius: 10px;
-      padding: 1.5rem;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-      border: 4px solid #ffb3c1;
-      position: relative;
-      overflow: hidden;
-    }
+  .memory-stamp::before,
+  .memory-stamp::after{
+    content:"";
+    display:inline-block;
+    width:24px;
+    height:1px;
+    background:var(--gold);
+    vertical-align:middle;
+    margin:0 0.6em;
+    opacity:.6;
+  }
 
-    .album-wrapper {
-      position: relative;
-      display: inline-block;
-    }
+  h1{
+    font-family:'Cormorant Garamond', serif;
+    font-weight:500;
+    font-style:italic;
+    font-size:clamp(2.6rem, 6vw, 3.8rem);
+    line-height:1.1;
+    margin:0 0 0.9rem;
+    color:var(--ink);
+  }
 
-    .album-art {
-      width: 180px;
-      height: 180px;
-      border-radius: 50%;
-      object-fit: cover;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-      border: 6px solid #ffc0cb;
-      animation: spin 10s linear infinite; 
-    }
+  header.playlist-hero > p{
+    font-size:1rem;
+    font-weight:300;
+    color:var(--ink-soft);
+    max-width:38ch;
+    margin:0 auto;
+  }
 
-    @keyframes spin {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
-    }
+  /* ---------- Playlist stack ---------- */
+  .playlist-stack{
+    max-width:640px;
+    margin:0 auto;
+    padding:0 1.5rem 6rem;
+    display:flex;
+    flex-direction:column;
+    gap:2.6rem;
+  }
 
-    .music-notes {
-      position: absolute;
-      top: 10px;
-      left: 10px;
-      font-size: 1.5rem;
-      animation: floatNotes 3s infinite ease-in-out;
-    }
+  .song{
+    background:var(--ivory-deep);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:2rem 1.8rem;
+    box-shadow:var(--shadow);
+  }
 
-    @keyframes floatNotes {
-      0% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
-      100% { transform: translateY(0); }
-    }
+  .song > h2{
+    font-family:'Cormorant Garamond', serif;
+    font-style:italic;
+    font-weight:600;
+    font-size:1.55rem;
+    margin:0 0 0.15rem;
+    color:var(--ink);
+  }
 
-    .audio-player {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-top: 0.5rem;
-      background: #fff;
-      border-radius: 5px;
-      padding: 10px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    }
+  .song > p{
+    margin:0 0 1.4rem;
+    font-size:0.78rem;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--rose-deep);
+    font-weight:500;
+  }
 
-    .audio-player button {
-      background: #cc3366;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      padding: 5px 10px;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
+  .music-player{
+    display:flex;
+    align-items:center;
+    gap:1.3rem;
+  }
 
-    .audio-player button:hover {
-      background: #ff4081;
-    }
+  .album-wrapper{
+    position:relative;
+    flex-shrink:0;
+  }
 
-    audio {
-      width: 100%;
-      display: none; 
-    }
+  .album-art{
+    width:84px;
+    height:84px;
+    border-radius:50%;
+    object-fit:cover;
+    box-shadow:0 4px 14px rgba(58,46,46,0.16);
+    border:4px solid var(--ivory);
+  }
 
-    .audio-controls {
-      display: flex;
-      align-items: center;
-      width: 100%;
-    }
+  .music-notes{
+    position:absolute;
+    top:-4px;
+    right:-6px;
+    font-size:0.8rem;
+    color:var(--rose);
+    opacity:0.85;
+  }
 
-    .audio-controls input[type="range"] {
-      -webkit-appearance: none;
-      width: 100%;
-      height: 5px;
-      background: #ccc;
-      border-radius: 5px;
-      outline: none;
-      margin: 0 10px;
-    }
+  .audio-player{
+    flex:1;
+    min-width:0;
+  }
 
-    .audio-controls input[type="range"]::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      appearance: none;
-      width: 15px;
-      height: 15px;
-      background: #cc3366;
-      border-radius: 50%;
-      cursor: pointer;
-    }
+  audio{ display:none; }
 
-    .audio-controls input[type="range"]::-moz-range-thumb {
-      width: 15px;
-      height: 15px;
-      background: #cc3366;
-      border-radius: 50%;
-      cursor: pointer;
-    }
+  .audio-controls{
+    display:flex;
+    align-items:center;
+    gap:0.9rem;
+  }
 
-    .back-button {
-      margin-top: 2rem;
-      display: inline-block;
-      font-size: 1rem;
-      color: #cc3366;
-      text-decoration: none;
-      border: 2px solid #cc3366;
-      padding: 0.6rem 1.2rem;
-      border-radius: 30px;
-      transition: 0.3s;
-      font-weight: 500;
-    }
+  .audio-controls button{
+    flex-shrink:0;
+    background:var(--rose);
+    color:var(--ivory);
+    border:none;
+    border-radius:999px;
+    padding:0.5rem 1.1rem;
+    font-size:0.78rem;
+    font-weight:500;
+    letter-spacing:0.04em;
+    cursor:pointer;
+    transition: background .25s ease;
+  }
 
-    .back-button:hover {
-      background: #cc3366;
-      color: white;
-    }
+  .audio-controls button:hover{ background:var(--rose-deep); }
 
-    .description {
-      display: none; 
-      margin-top: 1rem;
-      background: rgba(255, 240, 245, 0.8);
-      padding: 1rem;
-      border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(204, 51, 102, 0.2);
-      transition: max-height 0.3s ease, opacity 0.3s ease;
-      overflow-y: auto; 
-      opacity: 0;
-      max-height: 150px; 
-    }
+  .audio-controls input[type="range"]{
+    -webkit-appearance:none;
+    appearance:none;
+    flex:1;
+    height:3px;
+    background:var(--line);
+    border-radius:999px;
+    outline:none;
+  }
 
-    .show {
-      display: block; 
-      opacity: 1;
-      max-height: 200px; 
-    }
+  .audio-controls input[type="range"]::-webkit-slider-thumb{
+    -webkit-appearance:none;
+    appearance:none;
+    width:13px;
+    height:13px;
+    background:var(--rose-deep);
+    border-radius:50%;
+    cursor:pointer;
+  }
 
-    .description-button {
-      background: linear-gradient(135deg, #ffb3c1, #cc3366);
-      color: white;
-      border: none;
-      border-radius: 30px;
-      padding: 0.6rem 1.2rem;
-      cursor: pointer;
-      transition: background 0.3s, transform 0.3s;
-      margin-top: 1rem;
-    }
+  .audio-controls input[type="range"]::-moz-range-thumb{
+    width:13px;
+    height:13px;
+    background:var(--rose-deep);
+    border:none;
+    border-radius:50%;
+    cursor:pointer;
+  }
 
-    .description-button:hover {
-      background: #ff4081;
-      transform: scale(1.05);
-    }
-  </style>
-  <link rel="stylesheet" href="polish.css">
+  .description-button{
+    display:block;
+    margin-top:1.4rem;
+    background:none;
+    border:1px solid var(--line);
+    color:var(--ink-soft);
+    border-radius:999px;
+    padding:0.5rem 1.1rem;
+    font-size:0.75rem;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    cursor:pointer;
+    transition: border-color .25s ease, color .25s ease;
+  }
+
+  .description-button:hover{
+    border-color:var(--rose);
+    color:var(--rose-deep);
+  }
+
+  .description{
+    display:none;
+    margin-top:1.1rem;
+    padding-top:1.1rem;
+    border-top:1px solid var(--line);
+    font-family:'Cormorant Garamond', serif;
+    font-size:1.05rem;
+    font-style:italic;
+    line-height:1.65;
+    color:var(--ink);
+    opacity:0;
+    transition: opacity .3s ease;
+  }
+
+  .description.show{
+    display:block;
+    opacity:1;
+  }
+
+  @media (max-width: 480px){
+    header.playlist-hero{ padding-top:7.5rem; }
+    .music-player{ flex-direction:column; align-items:flex-start; }
+    .album-art{ width:72px; height:72px; }
+  }
+
+  :focus-visible{
+    outline:2px solid var(--rose);
+    outline-offset:3px;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation:none !important; transition:none !important; }
+  }
+</style>
+<link rel="stylesheet" href="polish.cs">
 </head>
 <body class="playlist-page">
+
   <div class="navbar">
-    <a href="index.html" class="back-button">Back to Home</a>
+    <a href="index.html">Back to Home</a>
   </div>
 
   <header class="playlist-hero">
@@ -257,149 +309,149 @@
   </header>
 
   <main class="playlist-stack" aria-label="Memory playlist">
-  <div class="song">
-    <h2>Your Universe</h2>
-    <p>Rico Blanco</p>
-    <div class="music-player">
-      <div class="album-wrapper">
-        <div class="music-notes">🎵</div>
-        <img src="rico.jpg" alt="Album Cover 1" class="album-art" loading="lazy" decoding="async" />
-      </div>
-      <div class="audio-player">
-        <audio id="audio1" src="youruniverse.mp3" preload="metadata"></audio>
-        <div class="audio-controls">
-          <button onclick="playAudio('audio1')">Play</button>
-          <input type="range" id="seek1" value="0" min="0" max="100" step="1" onchange="seekAudio('audio1', this.value)" aria-label="Your Universe progress">
+
+    <div class="song">
+      <h2>Your Universe</h2>
+      <p>Rico Blanco</p>
+      <div class="music-player">
+        <div class="album-wrapper">
+          <img src="rico.jpg" alt="Album Cover 1" class="album-art" loading="lazy" decoding="async" />
+          <span class="music-notes">&#9834;</span>
+        </div>
+        <div class="audio-player">
+          <audio id="audio1" src="youruniverse.mp3" preload="metadata"></audio>
+          <div class="audio-controls">
+            <button onclick="playAudio('audio1')">Play</button>
+            <input type="range" id="seek1" value="0" min="0" max="100" step="1" onchange="seekAudio('audio1', this.value)" aria-label="Your Universe progress">
+          </div>
         </div>
       </div>
-    </div>
-    <button class="description-button" onclick="toggleDescription('desc1', this)" aria-expanded="false">Show Description</button>
-    <div id="desc1" class="description">
-    i dedicated this song to you kasi it reminds me of how much you mean to me, and how your presence is so important to me. Even if you think na you're lucky to have me, the truth is, I'm the lucky one.
-    </div>
-  </div>
-
-  <div class="song">
-    <h2>Make It With You</h2>
-    <p>Ben&Ben</p>
-    <div class="music-player">
-      <div class="album-wrapper">
-        <div class="music-notes">🎶</div>
-        <img src="makeitwithyou.jpg" alt="Album Cover 2" class="album-art" loading="lazy" decoding="async" />
+      <button class="description-button" onclick="toggleDescription('desc1', this)" aria-expanded="false">Show Description</button>
+      <div id="desc1" class="description">
+        i dedicated this song to you kasi it reminds me of how much you mean to me, and how your presence is so important to me. Even if you think na you're lucky to have me, the truth is, I'm the lucky one.
       </div>
-      <div class="audio-player">
-        <audio id="audio2" src="makeitwithyou.mp3" preload="metadata"></audio>
-        <div class="audio-controls">
-          <button onclick="playAudio('audio2')">Play</button>
-          <input type="range" id="seek2" value="0" min="0" max="100" step="1" onchange="seekAudio('audio2', this.value)" aria-label="Make It With You progress">
+    </div>
+
+    <div class="song">
+      <h2>Make It With You</h2>
+      <p>Ben&amp;Ben</p>
+      <div class="music-player">
+        <div class="album-wrapper">
+          <img src="makeitwithyou.jpg" alt="Album Cover 2" class="album-art" loading="lazy" decoding="async" />
+          <span class="music-notes">&#9834;</span>
+        </div>
+        <div class="audio-player">
+          <audio id="audio2" src="makeitwithyou.mp3" preload="metadata"></audio>
+          <div class="audio-controls">
+            <button onclick="playAudio('audio2')">Play</button>
+            <input type="range" id="seek2" value="0" min="0" max="100" step="1" onchange="seekAudio('audio2', this.value)" aria-label="Make It With You progress">
+          </div>
         </div>
       </div>
-    </div>
-    <button class="description-button" onclick="toggleDescription('desc2', this)" aria-expanded="false">Show Description</button>
-    <div id="desc2" class="description">
-     I’m dedicating this song to you kasi I see something beautiful in what we have right now and i know that it's something real, something worth trying for. this song reminds me of how I feel about taking chances not just in life, but in love. Especially with you. And in the end, I really want to make it with you, my lovelove.
-    </div>
-  </div>
-
-  <div class="song">
-    <h2>Kahit Maputi Na Ang Buhok Ko</h2>
-    <p>Rey Valera</p>
-    <div class="music-player">
-      <div class="album-wrapper">
-        <div class="music-notes">🎼</div>
-        <img src="111.jpg" alt="Album Cover 3" class="album-art" loading="lazy" decoding="async" />
+      <button class="description-button" onclick="toggleDescription('desc2', this)" aria-expanded="false">Show Description</button>
+      <div id="desc2" class="description">
+        I'm dedicating this song to you kasi I see something beautiful in what we have right now and i know that it's something real, something worth trying for. this song reminds me of how I feel about taking chances not just in life, but in love. Especially with you. And in the end, I really want to make it with you, my lovelove.
       </div>
-      <div class="audio-player">
-        <audio id="audio3" src="111.mp3" preload="metadata"></audio>
-        <div class="audio-controls">
-          <button onclick="playAudio('audio3')">Play</button>
-          <input type="range" id="seek3" value="0" min="0" max="100" step="1" onchange="seekAudio('audio3', this.value)" aria-label="Kahit Maputi Na Ang Buhok Ko progress">
+    </div>
+
+    <div class="song">
+      <h2>Kahit Maputi Na Ang Buhok Ko</h2>
+      <p>Rey Valera</p>
+      <div class="music-player">
+        <div class="album-wrapper">
+          <img src="111.jpg" alt="Album Cover 3" class="album-art" loading="lazy" decoding="async" />
+          <span class="music-notes">&#9834;</span>
+        </div>
+        <div class="audio-player">
+          <audio id="audio3" src="111.mp3" preload="metadata"></audio>
+          <div class="audio-controls">
+            <button onclick="playAudio('audio3')">Play</button>
+            <input type="range" id="seek3" value="0" min="0" max="100" step="1" onchange="seekAudio('audio3', this.value)" aria-label="Kahit Maputi Na Ang Buhok Ko progress">
+          </div>
         </div>
       </div>
-    </div>
-    <button class="description-button" onclick="toggleDescription('desc3', this)" aria-expanded="false">Show Description</button>
-    <div id="desc3" class="description">
-     
-I dedicate this song to you because my love isn’t just for now, hindi lang to pang mabilisan, it’s for every version of you, even the one with gray or white hair, tired eyes, and quiet days. my love for you isn't just about kissing and sweet messages, it's about choosing you again and again, even as time changes everything else.
-And if I’m lucky, I’ll grow old with you, ikaw at ikaw pa rin ang pipiliin ko, kahit maputi na ang buhok ko.
-    </div>
-  </div>
-
-  <div class="song">
-    <h2>Pahintulot</h2>
-    <p>Shirebound</p>
-    <div class="music-player">
-      <div class="album-wrapper">
-        <div class="music-notes">🎤</div>
-        <img src="kami.jpg" alt="Album Cover 4" class="album-art" loading="lazy" decoding="async" />
+      <button class="description-button" onclick="toggleDescription('desc3', this)" aria-expanded="false">Show Description</button>
+      <div id="desc3" class="description">
+        I dedicate this song to you because my love isn't just for now, hindi lang to pang mabilisan, it's for every version of you, even the one with gray or white hair, tired eyes, and quiet days. my love for you isn't just about kissing and sweet messages, it's about choosing you again and again, even as time changes everything else.
+        And if I'm lucky, I'll grow old with you, ikaw at ikaw pa rin ang pipiliin ko, kahit maputi na ang buhok ko.
       </div>
-      <div class="audio-player">
-        <audio id="audio4" src="pahintulot.mp3" preload="metadata"></audio>
-        <div class="audio-controls">
-          <button onclick="playAudio('audio4')">Play</button>
-          <input type="range" id="seek4" value="0" min="0" max="100" step="1" onchange="seekAudio('audio4', this.value)" aria-label="Pahintulot progress">
+    </div>
+
+    <div class="song">
+      <h2>Pahintulot</h2>
+      <p>Shirebound</p>
+      <div class="music-player">
+        <div class="album-wrapper">
+          <img src="kami.jpg" alt="Album Cover 4" class="album-art" loading="lazy" decoding="async" />
+          <span class="music-notes">&#9834;</span>
+        </div>
+        <div class="audio-player">
+          <audio id="audio4" src="pahintulot.mp3" preload="metadata"></audio>
+          <div class="audio-controls">
+            <button onclick="playAudio('audio4')">Play</button>
+            <input type="range" id="seek4" value="0" min="0" max="100" step="1" onchange="seekAudio('audio4', this.value)" aria-label="Pahintulot progress">
+          </div>
         </div>
       </div>
-    </div>
-    <button class="description-button" onclick="toggleDescription('desc4', this)" aria-expanded="false">Show Description</button>
-    <div id="desc4" class="description">
-      I dedicated this song for you nung nanliligaw pa lang ako<br>
-      and yes, alam kong hindi mo to alam kasi di ko naman sinabi sa 'yo hehe,<br>
-      I dedicated this song to you kasi alam ko sa sarili ko na I'm not just courting you<br>
-      para wala lang or para mang trip lang, I was there with all honesty,<br>
-      patient and pure love.<br><br>
-      Hindi ako sigurado kung papayag ka, kung may pag-asa ba talaga ako,<br>
-      pero ang alam ko lang: kung pagbibigyan mo ako, I’d take care of you<br>
-      and your heart the best way I can.<br><br>
-
-      Hindi ko minadali, kasi para sa akin, ang totoong pagmamahal hindi lang basta sinasabi,<br>
-      hinihingi ‘yon ng pahintulot.
-    </div>
-  </div>
-
-  <div class="song">
-    <h2>About You</h2>
-    <p>The 1975</p>
-    <div class="music-player">
-      <div class="album-wrapper">
-        <div class="music-notes">♪</div>
-        <img src="peakpx.jpg" alt="Album Cover 5" class="album-art" loading="lazy" decoding="async" />
+      <button class="description-button" onclick="toggleDescription('desc4', this)" aria-expanded="false">Show Description</button>
+      <div id="desc4" class="description">
+        I dedicated this song for you nung nanliligaw pa lang ako<br>
+        and yes, alam kong hindi mo to alam kasi di ko naman sinabi sa 'yo hehe,<br>
+        I dedicated this song to you kasi alam ko sa sarili ko na I'm not just courting you<br>
+        para wala lang or para mang trip lang, I was there with all honesty,<br>
+        patient and pure love.<br><br>
+        Hindi ako sigurado kung papayag ka, kung may pag-asa ba talaga ako,<br>
+        pero ang alam ko lang: kung pagbibigyan mo ako, I'd take care of you<br>
+        and your heart the best way I can.<br><br>
+        Hindi ko minadali, kasi para sa akin, ang totoong pagmamahal hindi lang basta sinasabi,<br>
+        hinihingi 'yon ng pahintulot.
       </div>
-      <div class="audio-player">
-        <audio id="audio5" src="about you.mp3" preload="metadata"></audio>
-        <div class="audio-controls">
-          <button onclick="playAudio('audio5')">Play</button>
-          <input type="range" id="seek5" value="0" min="0" max="100" step="1" onchange="seekAudio('audio5', this.value)" aria-label="About You progress">
+    </div>
+
+    <div class="song">
+      <h2>About You</h2>
+      <p>The 1975</p>
+      <div class="music-player">
+        <div class="album-wrapper">
+          <img src="peakpx.jpg" alt="Album Cover 5" class="album-art" loading="lazy" decoding="async" />
+          <span class="music-notes">&#9834;</span>
+        </div>
+        <div class="audio-player">
+          <audio id="audio5" src="about you.mp3" preload="metadata"></audio>
+          <div class="audio-controls">
+            <button onclick="playAudio('audio5')">Play</button>
+            <input type="range" id="seek5" value="0" min="0" max="100" step="1" onchange="seekAudio('audio5', this.value)" aria-label="About You progress">
+          </div>
         </div>
       </div>
-    </div>
-    <button class="description-button" onclick="toggleDescription('desc5', this)" aria-expanded="false">Show Description</button>
-    <div id="desc5" class="description">
-      I dedicate this song for you because it's a reminder of the permanent footprint you left on my life. Time moves on and things change, but there are still certain moments, songs, and places where I'll always look around and think of you
-    </div>
-  </div>
-
-  <div class="song">
-    <h2>Paradise</h2>
-    <p>Chase Atlantic</p>
-    <div class="music-player">
-      <div class="album-wrapper">
-        <div class="music-notes">♪</div>
-        <img src="paradise.jpg" alt="Album Cover 6" class="album-art" loading="lazy" decoding="async" />
+      <button class="description-button" onclick="toggleDescription('desc5', this)" aria-expanded="false">Show Description</button>
+      <div id="desc5" class="description">
+        I dedicate this song for you because it's a reminder of the permanent footprint you left on my life. Time moves on and things change, but there are still certain moments, songs, and places where I'll always look around and think of you.
       </div>
-      <div class="audio-player">
-        <audio id="audio6" src="Paradise.mp3" preload="metadata"></audio>
-        <div class="audio-controls">
-          <button onclick="playAudio('audio6')">Play</button>
-          <input type="range" id="seek6" value="0" min="0" max="100" step="1" onchange="seekAudio('audio6', this.value)" aria-label="Paradise progress">
+    </div>
+
+    <div class="song">
+      <h2>Paradise</h2>
+      <p>Chase Atlantic</p>
+      <div class="music-player">
+        <div class="album-wrapper">
+          <img src="paradise.jpg" alt="Album Cover 6" class="album-art" loading="lazy" decoding="async" />
+          <span class="music-notes">&#9834;</span>
+        </div>
+        <div class="audio-player">
+          <audio id="audio6" src="Paradise.mp3" preload="metadata"></audio>
+          <div class="audio-controls">
+            <button onclick="playAudio('audio6')">Play</button>
+            <input type="range" id="seek6" value="0" min="0" max="100" step="1" onchange="seekAudio('audio6', this.value)" aria-label="Paradise progress">
+          </div>
         </div>
       </div>
+      <button class="description-button" onclick="toggleDescription('desc6', this)" aria-expanded="false">Show Description</button>
+      <div id="desc6" class="description">
+        This is the first Chase Atlantic song I listened to, and it became my favorite because of you.
+      </div>
     </div>
-    <button class="description-button" onclick="toggleDescription('desc6', this)" aria-expanded="false">Show Description</button>
-    <div id="desc6" class="description">
-      This is the first Chase Atlantic song I listened to, and it became my favorite because of you
-    </div>
-  </div>
+
   </main>
 
   <script>
@@ -410,20 +462,13 @@ And if I’m lucky, I’ll grow old with you, ikaw at ikaw pa rin ang pipiliin k
     function updateSeekBar(audio) {
       const audioNumber = getAudioNumber(audio.id);
       const seekBar = document.getElementById(`seek${audioNumber}`);
-
-      if (!seekBar || !audio.duration) {
-        return;
-      }
-
+      if (!seekBar || !audio.duration) return;
       seekBar.value = (audio.currentTime / audio.duration) * 100;
     }
 
     function updatePlayButton(audio, label) {
       const button = audio.closest('.audio-player')?.querySelector('button');
-
-      if (button) {
-        button.textContent = label;
-      }
+      if (button) button.textContent = label;
     }
 
     function playAudio(audioId) {
@@ -447,7 +492,6 @@ And if I’m lucky, I’ll grow old with you, ikaw at ikaw pa rin ang pipiliin k
 
     function seekAudio(audioId, value) {
       const audio = document.getElementById(audioId);
-
       if (audio.duration) {
         audio.currentTime = (value / 100) * audio.duration;
       }
@@ -456,7 +500,6 @@ And if I’m lucky, I’ll grow old with you, ikaw at ikaw pa rin ang pipiliin k
     function toggleDescription(descId, button) {
       const description = document.getElementById(descId);
       const isOpen = description.classList.toggle('show');
-
       if (button) {
         button.textContent = isOpen ? 'Hide Description' : 'Show Description';
         button.setAttribute('aria-expanded', String(isOpen));
