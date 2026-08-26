@@ -1,150 +1,304 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="description" content="A polished photo gallery for saved memories and favorite captured moments." />
-  <meta name="theme-color" content="#fff1f4" />
-  <title>Our Photo Gallery</title>
-  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;500&display=swap" rel="stylesheet">
-  <style>
-    body {
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(to right, #fff0f5, #f0e5ff);
-      padding: 2rem;
-      max-width: 1000px;
-      margin: auto;
-      color: #333;
-    }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="description" content="A quiet gallery of our favorite captured moments." />
+<meta name="theme-color" content="#FBF6F3" />
+<title>Our Memories</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ivory:#FBF6F3;
+    --ivory-deep:#F5EDE8;
+    --ink:#3A2E2E;
+    --ink-soft:#6E5D5D;
+    --rose:#B8768A;
+    --rose-deep:#9C5A6E;
+    --blush:#EFE0E2;
+    --gold:#C9A876;
+    --line: rgba(58,46,46,0.12);
+    --shadow: 0 1px 2px rgba(58,46,46,0.04), 0 8px 24px rgba(58,46,46,0.06);
+  }
 
-    .navbar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      background-color: rgba(255, 255, 255, 0.9);
-      padding: 1rem;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-      z-index: 1000;
-      text-align: center;
-    }
+  *{box-sizing:border-box;}
 
-    .navbar a {
-      margin: 0 1rem;
-      color: #cc3366;
-      font-weight: bold;
-      text-decoration: none;
-      padding: 0.6rem 1.2rem;
-      border-radius: 30px;
-      transition: background 0.3s, color 0.3s;
-    }
+  html{scroll-behavior:smooth;}
 
-    .navbar a:hover {
-      background: #cc3366;
-      color: white;
-    }
+  body{
+    margin:0;
+    font-family:'Inter', sans-serif;
+    background:var(--ivory);
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+  }
 
-    header {
-      text-align: center;
-      margin-bottom: 2rem;
-      margin-top: 80px;
-    }
+  a{color:inherit;}
 
-    h1 {
-      font-family: 'Pacifico', cursive;
-      font-size: 2.5rem;
-      color: #cc3366;
-      margin-bottom: 0.5rem;
-    }
+  /* ---------- Nav ---------- */
+  .navbar{
+    position:fixed;
+    top:0; left:0; right:0;
+    z-index:1000;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:1.1rem 1.5rem;
+    background:rgba(251,246,243,0.82);
+    backdrop-filter: blur(10px) saturate(140%);
+    -webkit-backdrop-filter: blur(10px) saturate(140%);
+    border-bottom:1px solid var(--line);
+    transition: transform .35s ease;
+  }
 
-    p {
-      font-size: 1rem;
-      color: #666;
-      line-height: 1.5;
-    }
+  .navbar a{
+    font-family:'Inter', sans-serif;
+    font-size:0.78rem;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    font-weight:500;
+    color:var(--ink-soft);
+    text-decoration:none;
+    padding:0.5rem 1rem;
+    border-radius:999px;
+    transition: color .25s ease, background .25s ease;
+  }
 
-    .gallery {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 2rem;
-      padding-top: 1rem;
-    }
+  .navbar a:hover{
+    color:var(--rose-deep);
+    background:var(--blush);
+  }
 
-    .photo-card {
-      background: white;
-      border-radius: 15px;
-      border: 4px dashed #ffc0cb;
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
-      overflow: hidden;
-      text-align: center;
-      padding: 1rem;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      cursor: pointer;
-    }
+  /* ---------- Hero ---------- */
+  header.gallery-hero{
+    max-width:720px;
+    margin:0 auto;
+    padding:9.5rem 1.5rem 4rem;
+    text-align:center;
+  }
 
-    .photo-card:hover {
-      transform: scale(1.05);
-      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
-    }
+  .memory-stamp{
+    display:inline-block;
+    font-size:0.72rem;
+    letter-spacing:0.22em;
+    text-transform:uppercase;
+    color:var(--gold);
+    font-weight:600;
+    margin-bottom:1.1rem;
+    position:relative;
+  }
 
-    .photo-card img {
-      width: 100%;
-      height: auto;
-      border-radius: 10px;
-      margin-bottom: 0.8rem;
-      transition: transform 0.3s ease;
-    }
+  .memory-stamp::before,
+  .memory-stamp::after{
+    content:"";
+    display:inline-block;
+    width:28px;
+    height:1px;
+    background:var(--gold);
+    vertical-align:middle;
+    margin:0 0.7em;
+    opacity:.6;
+  }
 
-    .photo-card img:hover {
-      transform: scale(1.1);
-    }
+  h1{
+    font-family:'Cormorant Garamond', serif;
+    font-weight:500;
+    font-style:italic;
+    font-size:clamp(2.6rem, 6vw, 3.8rem);
+    line-height:1.1;
+    margin:0 0 0.9rem;
+    color:var(--ink);
+  }
 
-    .caption {
-      font-size: 0.9rem;
-      color: #cc3366;
-      font-weight: 500;
-      margin-top: 0.5rem;
-    }
+  header.gallery-hero > p{
+    font-size:1rem;
+    font-weight:300;
+    color:var(--ink-soft);
+    line-height:1.7;
+    margin:0 auto;
+    max-width:38ch;
+  }
 
-    footer {
-      text-align: center;
-      margin-top: 3rem;
-      color: #aaa;
-      font-size: 0.9rem;
-    }
+  /* ---------- Gallery ---------- */
+  .gallery{
+    max-width:1180px;
+    margin:0 auto;
+    padding:0 1.5rem 6rem;
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(270px, 1fr));
+    gap:2.6rem 1.9rem;
+  }
 
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 1;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      overflow: auto;
-      background-color: rgba(0, 0, 0, 0.8);
-      justify-content: center;
-      align-items: center;
-    }
+  .photo-card{
+    cursor:pointer;
+    display:flex;
+    flex-direction:column;
+  }
 
-    .modal-content {
-      margin: auto;
-      display: block;
-      max-width: 80%;
-      border-radius: 10px;
-    }
+  .photo-frame{
+    position:relative;
+    overflow:hidden;
+    border-radius:6px;
+    background:var(--ivory-deep);
+    box-shadow:var(--shadow);
+  }
 
-    .close {
-      position: absolute;
-      top: 20px;
-      right: 35px;
-      color: #fff;
-      font-size: 40px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-  </style>
-  <link rel="stylesheet" href="polish.css">
+  .photo-frame img{
+    display:block;
+    width:100%;
+    height:340px;
+    object-fit:cover;
+    transition: transform .6s cubic-bezier(.2,.7,.2,1);
+  }
+
+  .photo-card:hover .photo-frame img{
+    transform: scale(1.045);
+  }
+
+  .index-mark{
+    position:absolute;
+    top:0.85rem;
+    left:0.85rem;
+    font-family:'Cormorant Garamond', serif;
+    font-style:italic;
+    font-size:0.85rem;
+    color:var(--ivory);
+    background:rgba(58,46,46,0.35);
+    backdrop-filter: blur(4px);
+    padding:0.2rem 0.6rem;
+    border-radius:999px;
+    letter-spacing:0.02em;
+  }
+
+  .caption{
+    margin-top:0.9rem;
+    padding-top:0.9rem;
+    border-top:1px solid var(--line);
+    font-family:'Cormorant Garamond', serif;
+    font-size:1.08rem;
+    font-weight:500;
+    line-height:1.55;
+    color:var(--ink);
+  }
+
+  .caption-tag{
+    display:block;
+    font-family:'Inter', sans-serif;
+    font-size:0.68rem;
+    font-weight:600;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--rose);
+    margin-bottom:0.35rem;
+  }
+
+  /* ---------- Footer ---------- */
+  footer{
+    text-align:center;
+    padding:3rem 1.5rem 4rem;
+    color:var(--ink-soft);
+    font-size:0.82rem;
+    font-weight:300;
+    letter-spacing:0.02em;
+  }
+
+  footer .heart{
+    color:var(--rose);
+  }
+
+  /* ---------- Modal / Lightbox ---------- */
+  .modal{
+    display:none;
+    position:fixed;
+    inset:0;
+    z-index:2000;
+    background:rgba(30,22,22,0.92);
+    align-items:center;
+    justify-content:center;
+    padding:2rem;
+  }
+
+  .modal-frame{
+    margin:0;
+    max-width:min(880px, 90vw);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+  }
+
+  .modal-content{
+    display:block;
+    max-width:100%;
+    max-height:72vh;
+    border-radius:6px;
+    box-shadow:0 20px 60px rgba(0,0,0,0.5);
+  }
+
+  #modalCaption{
+    margin-top:1.4rem;
+    text-align:center;
+    color:var(--ivory);
+    font-family:'Cormorant Garamond', serif;
+    font-size:1.2rem;
+    font-style:italic;
+    line-height:1.6;
+    max-width:60ch;
+  }
+
+  .close{
+    position:absolute;
+    top:1.5rem;
+    right:1.8rem;
+    background:none;
+    border:none;
+    color:var(--ivory);
+    font-size:2rem;
+    font-weight:300;
+    cursor:pointer;
+    line-height:1;
+    opacity:0.75;
+    transition:opacity .2s ease;
+  }
+  .close:hover{opacity:1;}
+
+  .modal-nav{
+    position:absolute;
+    top:50%;
+    transform:translateY(-50%);
+    background:rgba(255,255,255,0.08);
+    border:1px solid rgba(255,255,255,0.2);
+    color:var(--ivory);
+    font-size:1.6rem;
+    width:48px;
+    height:48px;
+    border-radius:50%;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transition: background .2s ease;
+  }
+  .modal-nav:hover{ background:rgba(255,255,255,0.18); }
+  .modal-prev{ left:1.2rem; }
+  .modal-next{ right:1.2rem; }
+
+  @media (max-width: 640px){
+    header.gallery-hero{ padding-top:7.5rem; }
+    .gallery{ grid-template-columns:1fr; gap:2.4rem; }
+    .modal-nav{ width:40px; height:40px; font-size:1.3rem; }
+  }
+
+  :focus-visible{
+    outline:2px solid var(--rose);
+    outline-offset:3px;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation:none !important; transition:none !important; }
+  }
+</style>
 </head>
 <body class="gallery-page">
 
@@ -155,134 +309,71 @@
   <header class="gallery-hero">
     <span class="memory-stamp">Photo Archive</span>
     <h1>Our Memories</h1>
-    <p>A softer gallery for the moments that stayed captured.</p>
+    <p>A quieter place to keep the moments that stayed with us.</p>
   </header>
 
-  <div class="gallery">
-    <div class="photo-card" onclick="openModal(0)">
-      <img src="una.jpg" alt="First Date" loading="lazy" decoding="async">
-      <div class="caption">Our 1st photo booth together, 1st anniversary din natin that time</div>
-    </div>
-    <div class="photo-card" onclick="openModal(1)">
-      <img src="dos.jpg" alt="Goofy Selfie" loading="lazy" decoding="async">
-      <div class="caption">Picture natin nung sinundo kita sa school hehe</div>
-    </div>
-    <div class="photo-card" onclick="openModal(2)">
-      <img src="tres.jpg" alt="School Event" loading="lazy" decoding="async">
-      <div class="caption">1st anniversary din natin to, fav ko to kasi ang cute natin tsaka binigyan mo rin ako ng ring</div>
-    </div>
-    <div class="photo-card" onclick="openModal(3)">
-      <img src="kwatro.jpg" alt="Walk Home" loading="lazy" decoding="async">
-      <div class="caption">this picture is way back nung grade 10 tayo, miss ko na rin</div>
-    </div>
-    <div class="photo-card" onclick="openModal(4)">
-      <img src="marikina.jpg" alt="Beach Day" loading="lazy" decoding="async">
-      <div class="caption">picture natin together sa marikina river banks, pinuntahan kita sa marikina that time</div>
-    </div>
-    <div class="photo-card" onclick="openModal(5)">
-      <img src="cute.jpg" alt="Anniversary Celebration" loading="lazy" decoding="async">
-      <div class="caption">ito yung una kong punta sa marikina, first bonding din natin together hehehe </div>
-    </div>
-    <div class="photo-card" onclick="openModal(6)">
-      <img src="cute2.jpg" alt="Hiking Adventure" loading="lazy" decoding="async">
-      <div class="caption">random moment! i love this picture kasi you're so cute, naka sandal pa yung ulo mo sa kamay ko baby</div>
-    </div>
-    <div class="photo-card" onclick="openModal(7)">
-      <img src="cute3.jpg" alt="Movie Night" loading="lazy" decoding="async">
-      <div class="caption">we're so cute together! we did the trend lovelove</div>
-    </div>
-    <div class="photo-card" onclick="openModal(8)">
-      <img src="usbebe.jpg" alt="Memory Placeholder 1" loading="lazy" decoding="async">
-      <div class="caption">that day we watched a movie together something small went wrong, but we pushed through it anyway. funny how the little problems didn't matter much when you had your loved ones beside you. At least we had that day. At least we had each other.</div>
-    </div>
-    <div class="photo-card" onclick="openModal(9)">
-      <img src="bebe.jpg" alt="Memory Placeholder 2" loading="lazy" decoding="async">
-      <div class="caption">this picture was from when we were in Grade 11, during a school event. I thought you looked so, so beautiful there, lovelove.
-</div>
-    </div>
-    <div class="photo-card" onclick="openModal(10)">
-      <img src="photo_2024-06-16_03-46-19.jpg" alt="Memory Placeholder 3" loading="lazy" decoding="async">
-      <div class="caption">another eye pics :)</div>
-    </div>
-    <div class="photo-card" onclick="openModal(11)">
-      <img src="mamaw.jpg" alt="Memory Placeholder 4" loading="lazy" decoding="async">
-      <div class="caption">my fav picture.</div>
-    </div>
-  </div>
+  <div class="gallery" id="gallery"></div>
+
+  <footer>
+    i love you, ganda  <span class="heart">&#9825;</span>
+  </footer>
 
   <div id="myModal" class="modal">
     <button class="close" type="button" onclick="closeModal()" aria-label="Close photo">&times;</button>
-    <button class="modal-nav modal-prev" type="button" onclick="changePhoto(-1)" aria-label="Previous photo">‹</button>
+    <button class="modal-nav modal-prev" type="button" onclick="changePhoto(-1)" aria-label="Previous photo">&#8249;</button>
     <figure class="modal-frame">
       <img class="modal-content" id="img01" alt="Modal Image">
       <figcaption id="modalCaption"></figcaption>
     </figure>
-    <button class="modal-nav modal-next" type="button" onclick="changePhoto(1)" aria-label="Next photo">›</button>
+    <button class="modal-nav modal-next" type="button" onclick="changePhoto(1)" aria-label="Next photo">&#8250;</button>
   </div>
 
   <script>
     const photos = [
-      {
-        src: "una.jpg",
-        alt: "First Date",
-        caption: "Our 1st photo booth together, 1st anniversary din natin that time"
-      },
-      {
-        src: "dos.jpg",
-        alt: "Goofy Selfie",
-        caption: "Picture natin nung sinundo kita sa school hehe"
-      },
-      {
-        src: "tres.jpg",
-        alt: "School Event",
-        caption: "1st anniversary din natin to, fav ko to kasi ang cute natin tsaka binigyan mo rin ako ng ring"
-      },
-      {
-        src: "kwatro.jpg",
-        alt: "Walk Home",
-        caption: "this picture is way back nung grade 10 tayo, miss ko na rin"
-      },
-      {
-        src: "marikina.jpg",
-        alt: "Marikina River Banks",
-        caption: "picture natin together sa marikina river banks, pinuntahan kita sa marikina that time"
-      },
-      {
-        src: "cute.jpg",
-        alt: "First Marikina Visit",
-        caption: "ito yung una kong punta sa marikina, first bonding din natin together hehehe"
-      },
-      {
-        src: "cute2.jpg",
-        alt: "Random Sweet Moment",
-        caption: "random moment! i love this picture kasi you're so cute, naka sandal pa yung ulo mo sa kamay ko baby"
-      },
-      {
-        src: "cute3.jpg",
-        alt: "Trend Photo",
-        caption: "we're so cute together! we did the trend lovelove"
-      },
-      {
-        src: "usbebe.jpg",
-        alt: "Memory Placeholder 1",
-        caption: "That day we watched a movie together something small went wrong, but we pushed through it anyway. Funny how the little problems didn't matter much when you had your loved ones beside you. At least we had that day. At least we had each other."
-      },
-      {
-        src: "bebe.jpg",
-        alt: "Memory Placeholder 2",
-        caption: "This picture was from when we were in Grade 11, during a school event. I thought you looked so, so beautiful there, lovelove."
-      },
-      {
-        src: "photo_2024-06-16_03-46-19.jpg",
-        alt: "Memory Placeholder 3",
-        caption: "another eye pics :)"
-      },
-      {
-        src: "mamaw.jpg",
-        alt: "Memory Placeholder 4",
-        caption: "my fav picture."
-      }
+      { src: "una.jpg", alt: "First Date", caption: "Our 1st photo booth together, 1st anniversary din natin that time" },
+      { src: "dos.jpg", alt: "Goofy Selfie", caption: "Picture natin nung sinundo kita sa school hehe" },
+      { src: "tres.jpg", alt: "School Event", caption: "1st anniversary din natin to, fav ko to kasi ang cute natin tsaka binigyan mo rin ako ng ring" },
+      { src: "kwatro.jpg", alt: "Walk Home", caption: "this picture is way back nung grade 10 tayo, miss ko na rin" },
+      { src: "marikina.jpg", alt: "Marikina River Banks", caption: "picture natin together sa marikina river banks, pinuntahan kita sa marikina that time" },
+      { src: "cute.jpg", alt: "First Marikina Visit", caption: "ito yung una kong punta sa marikina, first bonding din natin together hehehe" },
+      { src: "cute2.jpg", alt: "Random Sweet Moment", caption: "random moment! i love this picture kasi you're so cute, naka sandal pa yung ulo mo sa kamay ko baby" },
+      { src: "cute3.jpg", alt: "Trend Photo", caption: "we're so cute together! we did the trend lovelove" },
+      { src: "usbebe.jpg", alt: "Movie Night", caption: "that day we watched a movie together something small went wrong, but we pushed through it anyway. funny how the little problems didn't matter much when you had your loved ones beside you. At least we had that day. At least we had each other." },
+      { src: "bebe.jpg", alt: "Grade 11 School Event", caption: "this picture was from when we were in Grade 11, during a school event. I thought you looked so, so beautiful there, lovelove." },
+      { src: "photo_2024-06-16_03-46-19.jpg", alt: "Close-up", caption: "another eye pics :)" },
+      { src: "mamaw.jpg", alt: "Favorite Photo", caption: "my fav picture." },
+      { src: "g10.jpg", alt: "First Treat", caption: "first libre ko sa'yo." }
     ];
+
+    const galleryEl = document.getElementById("gallery");
+
+    function pad(n){ return String(n + 1).padStart(2, "0"); }
+
+    photos.forEach((photo, i) => {
+      const card = document.createElement("div");
+      card.className = "photo-card";
+      card.setAttribute("tabindex", "0");
+      card.setAttribute("role", "button");
+      card.setAttribute("aria-label", "Open photo: " + photo.alt);
+
+      card.innerHTML = `
+        <div class="photo-frame">
+          <span class="index-mark">${pad(i)}</span>
+          <img src="${photo.src}" alt="${photo.alt}" loading="lazy" decoding="async">
+        </div>
+        <div class="caption">
+          <span class="caption-tag">${photo.alt}</span>
+          ${photo.caption}
+        </div>
+      `;
+
+      card.addEventListener("click", () => openModal(i));
+      card.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openModal(i); }
+      });
+
+      galleryEl.appendChild(card);
+    });
 
     let activePhotoIndex = 0;
 
@@ -297,11 +388,9 @@
 
     function openModal(index) {
       const modal = document.getElementById("myModal");
-      const navbar = document.getElementById("navbar");
       activePhotoIndex = index;
       renderModalPhoto();
       modal.style.display = "flex";
-      navbar.style.display = "none";
       document.body.style.overflow = "hidden";
     }
 
@@ -312,29 +401,22 @@
 
     function closeModal() {
       const modal = document.getElementById("myModal");
-      const navbar = document.getElementById("navbar");
       modal.style.display = "none";
-      navbar.style.display = "";
       document.body.style.overflow = "";
     }
 
     document.addEventListener("keydown", (event) => {
       const modal = document.getElementById("myModal");
+      if (modal.style.display !== "flex") return;
+      if (event.key === "Escape") closeModal();
+      else if (event.key === "ArrowLeft") changePhoto(-1);
+      else if (event.key === "ArrowRight") changePhoto(1);
+    });
 
-      if (modal.style.display !== "flex") {
-        return;
-      }
-
-      if (event.key === "Escape") {
-        closeModal();
-      } else if (event.key === "ArrowLeft") {
-        changePhoto(-1);
-      } else if (event.key === "ArrowRight") {
-        changePhoto(1);
-      }
+    document.getElementById("myModal").addEventListener("click", (e) => {
+      if (e.target.id === "myModal") closeModal();
     });
   </script>
-  <script src="polish.js"></script>
 
 </body>
 </html>
