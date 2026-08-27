@@ -377,7 +377,7 @@
       let days = end.getDate() - start.getDate();
 
       if (days < 0) {
-        months -= 1;
+        months -=  1;
         const prevMonth = new Date(end.getFullYear(), end.getMonth(), 0);
         days += prevMonth.getDate();
       }
