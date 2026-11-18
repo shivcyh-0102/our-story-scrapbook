@@ -17,7 +17,7 @@ This is a static website built as a memory archive — not a countdown, not a li
 | File | What's Inside |
 |------|--------------|
 | `index.html` | Homepage — hero, a featured "Now Playing" song, the full About Us story, a mini timeline (Grade 4 → Dec 20, 2023 → Apr 14, 2026), an Important Dates list, and a Navigate grid to the other pages |
-| `gallery.html` | Photo gallery (13 photos) with a fullscreen modal viewer — click/tap to open, arrow buttons or ←/→ keys to move between photos, Esc or backdrop click to close, and a caption for each photo |
+| `gallery.html` | Photo gallery (15 photos) with a fullscreen modal viewer — click/tap to open, arrow buttons or ←/→ keys to move between photos, Esc or backdrop click to close, and a caption for each photo |
 | `playlist.html` | Personal music playlist — 6 songs, each with its own album art, custom play/pause + seek-bar audio player, and a toggleable description explaining what the song means |
 | `howlong.html` | Paused relationship timeline |
 | `allaboutyou.html` | A personal dedication page, restyled to match the site's shared design system |
